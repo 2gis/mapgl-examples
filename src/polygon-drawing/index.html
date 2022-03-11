@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <script src="../sourcebutton.js"></script>
+
+        <title>Polygon drawing</title>
+        <meta name="description" content="Example of user polygon drawing" />
+
+        <style>
+            html,
+            body,
+            #map {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+            .buttons {
+                position: absolute;
+                top: 5px;
+                left: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+        <div class="buttons">
+            <button id="finish">Finish drawing polygon</button>
+            <button id="reset">Reset polygon</button>
+        </div>
+        <script src="https://mapgl.2gis.com/api/js/v1"></script>
+        <script src="./index.js"></script>
+    </body>
+</html>
