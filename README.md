@@ -1,6 +1,6 @@
 # MapGL Examples
 
-The repository containes rough examples of using [2GIS MapGL API](https://dev.2gis.com/). You can check these examples on [2gis.github.io/mapgl-examples](https://2gis.github.io/mapgl-examples) page.
+The repository contains rough examples of using [2GIS MapGL API](https://dev.2gis.com/). You can check these examples on [2gis.github.io/mapgl-examples](https://2gis.github.io/mapgl-examples) page.
 
 More official examples with detailed descriptions can be found in the documentation on [docs.2gis.com](https://docs.2gis.com/en/mapgl/overview).
 
