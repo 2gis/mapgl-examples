@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <script src="../sourcebutton.js"></script>
+
+        <title>Huge clustering</title>
+        <meta
+            name="description"
+            content="Example of using a huge amount of markers with clustering"
+        />
+
+        <style>
+            html,
+            body,
+            #map {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+            #info {
+                position: absolute;
+                top: 0;
+                left: 0;
+                padding: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+        <div id="info"></div>
+        <script src="https://mapgl.2gis.com/api/js/v1"></script>
+        <script src="https://unpkg.com/@2gis/mapgl-clusterer@^2/dist/clustering.js"></script>
+        <script src="https://unpkg.com/dat.gui@0.7.9/build/dat.gui.js"></script>
+        <script src="../utils.js"></script>
+        <script src="./index.js"></script>
+    </body>
+</html>
