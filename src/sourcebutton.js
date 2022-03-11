@@ -7,7 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans";
     `;
     div.innerHTML = /* HTML */ `<a
-        href="https://github.com/2gis/mapgl-examples/tree/main/src${location.pathname}"
+        href="https://github.com/2gis/mapgl-examples/tree/main/src${location.pathname.replace(
+            'mapgl-examples/',
+            '',
+        )}"
         target="_blank"
         style="text-decoration: none; color: #000;"
     >
