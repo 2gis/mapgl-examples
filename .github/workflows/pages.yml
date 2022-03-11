@@ -20,7 +20,7 @@ jobs:
         run: |
           mkdir public
           node build
-          cp -r src public
+          cp -r src/* public
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
