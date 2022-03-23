@@ -24,8 +24,9 @@ map.on('styleload', () => {
     });
 });
 
-let draggableLabel;
+let currDraggableLabel;
 let draggablePointFeature;
+const prevDraggableLabels = [];
 
 const style = {
     textFont: 'Open_Sans',
@@ -68,7 +69,12 @@ const onStart = (e) => {
             draggablePointFeature = dataFeature;
             dataFeature.properties.drag = true;
             source.setData(data);
-            draggableLabel = new mapgl.Label(map, {
+
+            if (currDraggableLabel) {
+                prevDraggableLabels.push(currDraggableLabel);
+            }
+
+            currDraggableLabel = new mapgl.Label(map, {
                 coordinates: dataFeature.geometry.coordinates,
                 text: dataFeature.properties.text,
                 font: style.textFont,
@@ -77,6 +83,7 @@ const onStart = (e) => {
                 haloColor: style.textHaloColor,
                 haloRadius: style.textHaloWidth,
             });
+
             map.setOption('disableDragging', true);
             container.addEventListener('mousemove', onMove);
             container.addEventListener('touchmove', onMove);
@@ -87,7 +94,7 @@ const onStart = (e) => {
 const onMove = (e) => {
     const clientX = e instanceof MouseEvent ? e.clientX : e.changedTouches[0].clientX;
     const clientY = e instanceof MouseEvent ? e.clientY : e.changedTouches[0].clientY;
-    draggableLabel?.setCoordinates(map.unproject([clientX, clientY]));
+    currDraggableLabel?.setCoordinates(map.unproject([clientX, clientY]));
 };
 
 const onEnd = (e) => {
@@ -101,13 +108,20 @@ const onEnd = (e) => {
     }
     source.setData(data);
     map.setOption('disableDragging', false);
+    draggablePointFeature = undefined;
 
     // Sets the timeout for the label destroying to avoid blinking so the GeoJSON point has time to appear.
     // You can adjust its value.
     setTimeout(() => {
-        draggableLabel?.destroy();
-        draggableLabel = undefined;
-        draggablePointFeature = undefined;
+        if (prevDraggableLabels.length) {
+            prevDraggableLabels.forEach((l) => {
+                l.destroy();
+            });
+            prevDraggableLabels.length = 0;
+        } else {
+            currDraggableLabel?.destroy();
+            currDraggableLabel = undefined;
+        }
     }, 100);
 };
 
