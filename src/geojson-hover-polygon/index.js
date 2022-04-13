@@ -126,9 +126,11 @@ map.on('mouseover', (ev) => {
 
     if (ev.targetData && ev.targetData.source === geojsonSource) {
         polygon = new mapgl.Polygon(map, {
-            coordinates: ev.targetData.feature.coordinates,
+            coordinates: ev.targetData.feature.geometry.coordinates,
             interactive: false,
-            color: '#ff000088',
+            color: '#ff000099',
+            strokeColor: '#ff000099',
+            strokeWidth: 1,
         });
     }
 });
