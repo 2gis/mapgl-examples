@@ -1,5 +1,6 @@
 // API key can be used on 2gis.github.io/mapgl-examples only!
 const key = 'a1893935-6834-4445-b97a-3405fb426c5b';
+const directionsKey = 'rujany4131';
 
 const map = new mapgl.Map('map', {
     center: [55.40986, 25.226925],
@@ -115,7 +116,7 @@ async function fetchAndDrawRoute(points, obstacles) {
         exclude: obstacles,
     };
 
-    return fetch(`https://catalog.api.2gis.ru/carrouting/6.0.0/global?key=${key}`, {
+    return fetch(`https://catalog.api.2gis.ru/carrouting/6.0.0/global?key=${directionsKey}`, {
         method: 'post',
         body: JSON.stringify(query),
     })

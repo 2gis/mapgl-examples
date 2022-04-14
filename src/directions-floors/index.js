@@ -286,7 +286,7 @@ function drawRoute(points, result) {
                 });
                 lastPoint = {
                     coordinates: coordinates[coordinates.length - 1],
-                    floorId: maneuver.outcoming_path.floor_from,
+                    floorId: maneuver.outcoming_path.floor_to,
                 };
             });
         } else if (maneuver.comment) {
