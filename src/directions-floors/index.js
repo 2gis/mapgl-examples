@@ -53,6 +53,8 @@ map.once('styleload', () => {
             color: [
                 'match',
                 ['get', 'floodId'],
+                ['end'],
+                '#777',
                 ['141832716800582'],
                 '#00ff00',
                 ['141832716803532'],
@@ -197,6 +199,9 @@ function drawRoute(points, result) {
         ],
     };
 
+    let isFirstLineAdded = false;
+    let lastPoint;
+
     result.maneuvers.forEach((maneuver) => {
         if (maneuver.outcoming_path) {
             if (maneuver.comment && maneuver.outcoming_path.geometry.length) {
@@ -218,8 +223,25 @@ function drawRoute(points, result) {
                     feature.properties.floodId = maneuver.outcoming_path.floor_from;
                 }
                 data.features.push(feature);
+
+                if (!isFirstLineAdded) {
+                    isFirstLineAdded = true;
+                    data.features.push({
+                        type: 'Feature',
+                        properties: {
+                            type: 'path',
+                            floorId: 'end',
+                        },
+                        geometry: {
+                            type: 'LineString',
+                            coordinates: [[points[0].x, points[0].y], coordinates],
+                        },
+                    });
+                }
             }
             maneuver.outcoming_path.geometry.forEach((geometry) => {
+                const coordinates = parserLineStringWKT(geometry.selection);
+
                 const feature = {
                     type: 'Feature',
                     properties: {
@@ -227,7 +249,7 @@ function drawRoute(points, result) {
                     },
                     geometry: {
                         type: 'LineString',
-                        coordinates: parserLineStringWKT(geometry.selection),
+                        coordinates,
                     },
                 };
 
@@ -236,8 +258,22 @@ function drawRoute(points, result) {
                 }
 
                 data.features.push(feature);
+
+                lastPoint = coordinates[coordinates.length - 1];
             });
         }
+    });
+
+    data.features.push({
+        type: 'Feature',
+        properties: {
+            type: 'path',
+            floorId: 'end',
+        },
+        geometry: {
+            type: 'LineString',
+            coordinates: [lastPoint, [points[1].x, points[1].y]],
+        },
     });
 
     geojsonSource.setData(data);
