@@ -1,5 +1,6 @@
 // API key can be used on 2gis.github.io/mapgl-examples only!
 const key = 'a1893935-6834-4445-b97a-3405fb426c5b';
+const directionsKey = 'rujany4131';
 
 const map = new mapgl.Map('map', {
     center: [82.89063353068022, 54.98359138225009],
@@ -7,8 +8,8 @@ const map = new mapgl.Map('map', {
     key,
 });
 window.addEventListener('resize', () => map.invalidateSize());
-map.on('click', (ev) => console.log(ev.lngLat));
 
+// Enable floor control on the right
 const floorControl = new mapgl.FloorControl(map, {
     position: 'topRight',
 });
@@ -24,6 +25,7 @@ document.querySelector('#toggle-points').addEventListener('click', () => {
     });
 });
 
+// Add styleds for points and segments
 map.once('styleload', () => {
     const lineFilter = [
         'all',
@@ -31,38 +33,44 @@ map.once('styleload', () => {
         ['==', ['get', 'type'], 'path'],
         [
             'any',
-            ['==', ['get', 'floodId'], null],
-            ['in', ['get', 'floodId'], ['global', '_activeFloorIds']],
+            ['==', ['get', 'floorId'], null],
+            ['in', ['get', 'floorId'], ['global', '_activeFloorIds']],
         ],
     ];
-    map.addLayer({
-        id: 'my-line-white',
-        type: 'line',
-        filter: lineFilter,
-        style: {
-            width: 9,
-            color: '#fff',
+    map.addLayer(
+        {
+            id: 'my-line-white',
+            type: 'line',
+            filter: lineFilter,
+            style: {
+                width: 9,
+                color: '#fff',
+            },
         },
-    });
-    map.addLayer({
-        id: 'my-line',
-        type: 'line',
-        filter: lineFilter,
-        style: {
-            width: 5,
-            color: [
-                'match',
-                ['get', 'floodId'],
-                ['end'],
-                '#777',
-                ['141832716800582'],
-                '#00ff00',
-                ['141832716803532'],
-                '#0000ff',
-                '#ff0000',
-            ],
+        '344517',
+    );
+    map.addLayer(
+        {
+            id: 'my-line',
+            type: 'line',
+            filter: lineFilter,
+            style: {
+                width: 5,
+                color: [
+                    'match',
+                    ['get', 'index'],
+                    [-1],
+                    '#ccc',
+                    [0],
+                    '#00ff00',
+                    [1],
+                    '#0000ff',
+                    '#ff0000',
+                ],
+            },
         },
-    });
+        '344517',
+    );
 
     map.addLayer({
         id: 'my-point',
@@ -74,8 +82,8 @@ map.once('styleload', () => {
             ['==', ['get', 'type'], 'point'],
             [
                 'any',
-                ['==', ['get', 'floodId'], null],
-                ['in', ['get', 'floodId'], ['global', '_activeFloorIds']],
+                ['==', ['get', 'floorId'], null],
+                ['in', ['get', 'floorId'], ['global', '_activeFloorIds']],
             ],
         ],
         style: {
@@ -88,26 +96,28 @@ map.once('styleload', () => {
             textPriority: 1000,
             textHaloWidth: 1,
             textHaloColor: '#fff',
+            allowOverlap: true,
         },
     });
     map.addLayer({
         id: 'my-point-end',
         type: 'point',
-        filter: [
-            'all',
-            ['==', ['sourceAttr', 'foo'], 'bar'],
-            ['==', ['get', 'type'], 'end'],
-            [
-                'any',
-                ['==', ['get', 'floodId'], null],
-                ['in', ['get', 'floodId'], ['global', '_activeFloorIds']],
-            ],
-        ],
+        filter: ['all', ['==', ['sourceAttr', 'foo'], 'bar'], ['==', ['get', 'type'], 'end']],
         style: {
-            iconImage: 'ent_i',
-            iconWidth: 27,
-            textFont: 'Noto_Sans',
-            textFontSize: 12,
+            iconImage: [
+                'match',
+                [
+                    'any',
+                    ['==', ['get', 'floorId'], null],
+                    ['in', ['get', 'floorId'], ['global', '_activeFloorIds']],
+                ],
+                [true],
+                'ent_i',
+                'ent',
+            ],
+            iconWidth: 30,
+            textFont: 'Noto_Sans_Semibold',
+            textFontSize: 14,
             textField: ['get', 'comment'],
             iconPriority: 2000,
             textPriority: 2000,
@@ -117,30 +127,48 @@ map.once('styleload', () => {
     });
 });
 
-async function fetchAndDrawRoute() {
+const points = [
+    {
+        type: 'pedo',
+        x: 82.88828966022959,
+        y: 54.983109254770376,
+    },
+    {
+        type: 'pedo',
+        x: 82.89149408367815,
+        y: 54.98388809715867,
+        object_id: '141265770013202',
+        floor_id: '141832716803532',
+    },
+];
+
+map.on('click', (ev) => {
+    // WARNING: Do not use this in production code,
+    // until MapGL release with new map.getStyleState() method.
+    const styleState = map.getStyleState?.() || map._impl.state.styleState;
+
+    points.push({
+        type: 'pedo',
+        x: ev.lngLat[0],
+        y: ev.lngLat[1],
+        floor_id: styleState._activeFloorIds?.[0],
+        object_id: ev.target?.id,
+    });
+    points.splice(0, 1);
+    fetchAndDrawRoute();
+});
+
+fetchAndDrawRoute();
+
+function fetchAndDrawRoute() {
     const query = {
         type: 'pedestrian',
-        points: [
-            {
-                start: true,
-                type: 'pedo',
-                x: 82.88828966022959,
-                y: 54.983109254770376,
-            },
-            {
-                start: false,
-                type: 'pedo',
-                x: 82.89149408367815,
-                y: 54.98388809715867,
-                object_id: '141265770013202',
-                floor_id: '141832716803532',
-            },
-        ],
+        points,
         use_indoor: true,
         options: ['pedestrian_instructions'],
     };
 
-    return fetch(`https://catalog.api.2gis.ru/carrouting/6.0.0/global?key=rujany4131`, {
+    return fetch(`https://catalog.api.2gis.ru/carrouting/6.0.0/global?key=${directionsKey}`, {
         method: 'post',
         body: JSON.stringify(query),
     })
@@ -152,8 +180,6 @@ async function fetchAndDrawRoute() {
         })
         .then((r) => drawRoute(query.points, r.result && r.result[0]));
 }
-
-fetchAndDrawRoute();
 
 const geojsonSource = new mapgl.GeoJsonSource(map, {
     data: {
@@ -178,6 +204,7 @@ function drawRoute(points, result) {
                 properties: {
                     type: 'end',
                     comment: 'A',
+                    floorId: points[0].floor_id,
                 },
                 geometry: {
                     type: 'Point',
@@ -189,7 +216,7 @@ function drawRoute(points, result) {
                 properties: {
                     type: 'end',
                     comment: 'B',
-                    floodId: points[1].floor_id,
+                    floorId: points[1].floor_id,
                 },
                 geometry: {
                     type: 'Point',
@@ -199,82 +226,99 @@ function drawRoute(points, result) {
         ],
     };
 
-    let isFirstLineAdded = false;
-    let lastPoint;
+    let colorIndex = 0;
+    let isFirstSegmentAdded = false;
+    let lastPoint = {
+        coordinates: [points[0].x, points[0].y],
+        floorId: points[0].floor_id,
+    };
 
     result.maneuvers.forEach((maneuver) => {
-        if (maneuver.outcoming_path) {
-            if (maneuver.comment && maneuver.outcoming_path.geometry.length) {
-                const coordinates = parserLineStringWKT(
-                    maneuver.outcoming_path.geometry[0].selection,
-                )[0];
-                const feature = {
+        if (maneuver.outcoming_path && maneuver.outcoming_path.geometry.length) {
+            const firstCoord = parserLineStringWKT(
+                maneuver.outcoming_path.geometry[0].selection,
+            )[0];
+
+            if (maneuver.comment) {
+                data.features.push({
                     type: 'Feature',
                     properties: {
                         type: 'point',
                         comment: maneuver.comment,
+                        floorId: maneuver.outcoming_path.floor_from,
                     },
                     geometry: {
                         type: 'Point',
-                        coordinates,
+                        coordinates: firstCoord,
                     },
-                };
-                if (maneuver.outcoming_path.floor_from) {
-                    feature.properties.floodId = maneuver.outcoming_path.floor_from;
-                }
-                data.features.push(feature);
-
-                if (!isFirstLineAdded) {
-                    isFirstLineAdded = true;
-                    data.features.push({
-                        type: 'Feature',
-                        properties: {
-                            type: 'path',
-                            floorId: 'end',
-                        },
-                        geometry: {
-                            type: 'LineString',
-                            coordinates: [[points[0].x, points[0].y], coordinates],
-                        },
-                    });
-                }
+                });
             }
-            maneuver.outcoming_path.geometry.forEach((geometry) => {
-                const coordinates = parserLineStringWKT(geometry.selection);
 
-                const feature = {
+            if (!isFirstSegmentAdded) {
+                isFirstSegmentAdded = true;
+                data.features.push({
                     type: 'Feature',
                     properties: {
                         type: 'path',
+                        index: -1,
+                        floorId: maneuver.outcoming_path.floor_from,
+                    },
+                    geometry: {
+                        type: 'LineString',
+                        coordinates: [[points[0].x, points[0].y], firstCoord],
+                    },
+                });
+            }
+
+            maneuver.outcoming_path.geometry.forEach((geometry) => {
+                const coordinates = parserLineStringWKT(geometry.selection);
+                data.features.push({
+                    type: 'Feature',
+                    properties: {
+                        type: 'path',
+                        index: colorIndex++ % 3,
+                        floorId: maneuver.outcoming_path.floor_to,
                     },
                     geometry: {
                         type: 'LineString',
                         coordinates,
                     },
+                });
+                lastPoint = {
+                    coordinates: coordinates[coordinates.length - 1],
+                    floorId: maneuver.outcoming_path.floor_from,
                 };
-
-                if (maneuver.outcoming_path.floor_from) {
-                    feature.properties.floodId = maneuver.outcoming_path.floor_from;
-                }
-
-                data.features.push(feature);
-
-                lastPoint = coordinates[coordinates.length - 1];
+            });
+        } else if (maneuver.comment) {
+            data.features.push({
+                type: 'Feature',
+                properties: {
+                    type: 'point',
+                    comment: maneuver.comment,
+                    floorId: lastPoint.floorId,
+                },
+                geometry: {
+                    type: 'Point',
+                    coordinates: lastPoint.coordinates,
+                },
             });
         }
     });
 
-    data.features.push({
-        type: 'Feature',
-        properties: {
-            type: 'path',
-            floorId: 'end',
-        },
-        geometry: {
-            type: 'LineString',
-            coordinates: [lastPoint, [points[1].x, points[1].y]],
-        },
-    });
+    if (lastPoint) {
+        data.features.push({
+            type: 'Feature',
+            properties: {
+                type: 'path',
+                floorId: lastPoint.floorId,
+                index: -1,
+            },
+            geometry: {
+                type: 'LineString',
+                coordinates: [lastPoint.coordinates, [points[1].x, points[1].y]],
+            },
+        });
+    }
 
     geojsonSource.setData(data);
 }
