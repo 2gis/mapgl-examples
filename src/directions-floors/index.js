@@ -15,22 +15,46 @@ const floorControl = new mapgl.FloorControl(map, {
 });
 
 let showPoints = true;
+let showAlways = false;
 map.setStyleState({
     showPoints,
+    showAlways,
 });
 document.querySelector('#toggle-points').addEventListener('click', () => {
     showPoints = !showPoints;
     map.setStyleState({
         showPoints,
+        showAlways,
+    });
+});
+document.querySelector('#show-always').addEventListener('click', (ev) => {
+    showAlways = !showAlways;
+    ev.target.innerHTML = showAlways
+        ? 'Enable dependency on floors'
+        : 'Disable dependency on floors';
+    map.setStyleState({
+        showPoints,
+        showAlways,
     });
 });
 
 // Add styleds for points and segments
 map.once('styleload', () => {
+    const whiteLineStyle = {
+        width: 9,
+        color: '#fff',
+    };
+    const lineStyle = {
+        width: 5,
+        color: ['match', ['get', 'index'], [-1], '#ccc', [0], '#00ff00', [1], '#0000ff', '#ff0000'],
+    };
+
+    // Lines which are showing under houses
     const lineFilter = [
         'all',
         ['==', ['sourceAttr', 'foo'], 'bar'],
         ['==', ['get', 'type'], 'path'],
+        ['==', ['global', 'showAlways'], false],
         [
             'any',
             ['==', ['get', 'floorId'], null],
@@ -42,10 +66,7 @@ map.once('styleload', () => {
             id: 'my-line-white',
             type: 'line',
             filter: lineFilter,
-            style: {
-                width: 9,
-                color: '#fff',
-            },
+            style: whiteLineStyle,
         },
         '344517',
     );
@@ -54,23 +75,30 @@ map.once('styleload', () => {
             id: 'my-line',
             type: 'line',
             filter: lineFilter,
-            style: {
-                width: 5,
-                color: [
-                    'match',
-                    ['get', 'index'],
-                    [-1],
-                    '#ccc',
-                    [0],
-                    '#00ff00',
-                    [1],
-                    '#0000ff',
-                    '#ff0000',
-                ],
-            },
+            style: lineStyle,
         },
         '344517',
     );
+
+    // Lines which are showing under houses
+    const lineAboveFilter = [
+        'all',
+        ['==', ['sourceAttr', 'foo'], 'bar'],
+        ['==', ['get', 'type'], 'path'],
+        ['==', ['global', 'showAlways'], true],
+    ];
+    map.addLayer({
+        id: 'my-line-white-above',
+        type: 'line',
+        filter: lineAboveFilter,
+        style: whiteLineStyle,
+    });
+    map.addLayer({
+        id: 'my-line-above',
+        type: 'line',
+        filter: lineAboveFilter,
+        style: lineStyle,
+    });
 
     map.addLayer({
         id: 'my-point',
@@ -82,6 +110,7 @@ map.once('styleload', () => {
             ['==', ['get', 'type'], 'point'],
             [
                 'any',
+                ['==', ['global', 'showAlways'], true],
                 ['==', ['get', 'floorId'], null],
                 ['in', ['get', 'floorId'], ['global', '_activeFloorIds']],
             ],
@@ -109,6 +138,7 @@ map.once('styleload', () => {
                 [
                     'any',
                     ['==', ['get', 'floorId'], null],
+                    ['==', ['global', 'showAlways'], true],
                     ['in', ['get', 'floorId'], ['global', '_activeFloorIds']],
                 ],
                 [true],
