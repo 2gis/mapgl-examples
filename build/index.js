@@ -22,7 +22,10 @@ const examples = files
         );
         const description = descriptionMatch?.[1];
 
-        if (!title || !description) {
+        const previewMatch = indexHtml.match(/<meta\s+name="preview"\s+content="(.+)"\s*\/>/);
+        const preview = previewMatch?.[1];
+
+        if (!title || !description || !preview) {
             console.log(
                 `Not found a title or a description for the example in the index.html in the folder ${folder.name}`,
             );
@@ -30,6 +33,7 @@ const examples = files
         }
 
         return /* HTML */ `<div class="example">
+            <img height="300" width="400" src="./${folder.name}/${preview}" />
             <div class="example-title">${title}</div>
             <div class="example-desc">${description}</div>
             <div>
