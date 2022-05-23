@@ -22,18 +22,24 @@ const examples = files
         );
         const description = descriptionMatch?.[1];
 
-        const previewMatch = indexHtml.match(/<meta\s+name="preview"\s+content="(.+)"\s*\/>/);
-        const preview = previewMatch?.[1];
+        const previewPath = `${folder.name}/preview.png`;
+        const previewExists = fs.existsSync('src/' + previewPath);
 
-        if (!title || !description || !preview) {
+        if (!title || !description) {
             console.log(
                 `Not found a title or a description for the example in the index.html in the folder ${folder.name}`,
             );
             return '';
         }
+        if (!previewExists) {
+            console.log(
+                `In a folder ${folder.name} must be preview.png image with resolution 400x300`,
+            );
+            return '';
+        }
 
         return /* HTML */ `<div class="example">
-            <img height="300" width="400" src="./${folder.name}/${preview}" />
+            <img height="300" width="400" src="./${previewPath}" />
             <div class="example-title">${title}</div>
             <div class="example-desc">${description}</div>
             <div>
