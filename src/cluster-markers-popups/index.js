@@ -21,7 +21,6 @@ const clusterer = new mapgl.Clusterer(map);
 clusterer.load(markers);
 
 clusterer.on('click', (ev) => {
-    console.log(ev);
     if (ev.target.type === 'marker') {
         showPopup(ev.target.data);
     } else {
