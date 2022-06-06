@@ -12,13 +12,17 @@
                 margin: 0 40px;
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
                     Arial, 'Noto Sans';
+                font-size: 16px;
             }
             h1,
+            h2,
             p {
                 margin: 15px 0;
             }
             .list {
                 margin-top: 40px;
+            }
+            .category-content {
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
@@ -29,7 +33,7 @@
                 width: 400px;
             }
             .example-title {
-                font-weight: 700;
+                font-weight: 600;
                 font-size: 18px;
             }
         </style>
@@ -46,8 +50,12 @@
             More official examples with detailed descriptions can be found in the documentation on
             <a href="https://docs.2gis.com/en/mapgl/overview">docs.2gis.com</a>.
         </p>
-        <div class="list"><div class="example">
-            <img height="300" width="400" src="./backend-markers/preview.png" />
+        <div class="list"><div class="category">
+        <h2>Common</h2>
+        <div class="category-content"><div class="example">
+            <div class="example-preview">
+                <img height="300" width="400" src="./backend-markers/preview.png" />
+            </div>
             <div class="example-title">Markers backend</div>
             <div class="example-desc">Example with GeoJSON markers and a backend simulation that sends them to client</div>
             <div>
@@ -58,95 +66,9 @@
             </div>
         </div>
 <div class="example">
-            <img height="300" width="400" src="./cluster-markers-arcs/preview.png" />
-            <div class="example-title">Cluster markers with arcs</div>
-            <div class="example-desc">Clustered markers with arc geometry</div>
-            <div>
-                <a href="./cluster-markers-arcs">[demo]</a>
-                <a href="https://github.com/2gis/mapgl-examples/tree/main/src/cluster-markers-arcs"
-                    >[source]</a
-                >
+            <div class="example-preview">
+                <img height="300" width="400" src="./polygon-drawing/preview.png" />
             </div>
-        </div>
-<div class="example">
-            <img height="300" width="400" src="./directions-floors/preview.png" />
-            <div class="example-title">Directions API floors</div>
-            <div class="example-desc">Using Directions API through floors plans</div>
-            <div>
-                <a href="./directions-floors">[demo]</a>
-                <a href="https://github.com/2gis/mapgl-examples/tree/main/src/directions-floors"
-                    >[source]</a
-                >
-            </div>
-        </div>
-<div class="example">
-            <img height="300" width="400" src="./directions-obstacles/preview.png" />
-            <div class="example-title">Directions API with obstacles</div>
-            <div class="example-desc">Using Directions API with obstacles</div>
-            <div>
-                <a href="./directions-obstacles">[demo]</a>
-                <a href="https://github.com/2gis/mapgl-examples/tree/main/src/directions-obstacles"
-                    >[source]</a
-                >
-            </div>
-        </div>
-<div class="example">
-            <img height="300" width="400" src="./geojson-data-update/preview.png" />
-            <div class="example-title">GeoJSON data update</div>
-            <div class="example-desc">Changing data in GeoJSON source</div>
-            <div>
-                <a href="./geojson-data-update">[demo]</a>
-                <a href="https://github.com/2gis/mapgl-examples/tree/main/src/geojson-data-update"
-                    >[source]</a
-                >
-            </div>
-        </div>
-<div class="example">
-            <img height="300" width="400" src="./geojson-dragging/preview.png" />
-            <div class="example-title">GeoJSON point dragging</div>
-            <div class="example-desc">Example of GeoJSON point dragging</div>
-            <div>
-                <a href="./geojson-dragging">[demo]</a>
-                <a href="https://github.com/2gis/mapgl-examples/tree/main/src/geojson-dragging"
-                    >[source]</a
-                >
-            </div>
-        </div>
-<div class="example">
-            <img height="300" width="400" src="./geojson-hover-polygon/preview.png" />
-            <div class="example-title">Hover GeoJSON with Polygon</div>
-            <div class="example-desc">Hover GeoJSON data effect with additional Polygon object</div>
-            <div>
-                <a href="./geojson-hover-polygon">[demo]</a>
-                <a href="https://github.com/2gis/mapgl-examples/tree/main/src/geojson-hover-polygon"
-                    >[source]</a
-                >
-            </div>
-        </div>
-<div class="example">
-            <img height="300" width="400" src="./geojson-hover-setdata/preview.png" />
-            <div class="example-title">Hover GeoJSON setData</div>
-            <div class="example-desc">Hover effect with GeoJSON source setData method</div>
-            <div>
-                <a href="./geojson-hover-setdata">[demo]</a>
-                <a href="https://github.com/2gis/mapgl-examples/tree/main/src/geojson-hover-setdata"
-                    >[source]</a
-                >
-            </div>
-        </div>
-<div class="example">
-            <img height="300" width="400" src="./huge-clustering/preview.png" />
-            <div class="example-title">Huge clustering</div>
-            <div class="example-desc">Example of using a huge amount of markers with clustering</div>
-            <div>
-                <a href="./huge-clustering">[demo]</a>
-                <a href="https://github.com/2gis/mapgl-examples/tree/main/src/huge-clustering"
-                    >[source]</a
-                >
-            </div>
-        </div>
-<div class="example">
-            <img height="300" width="400" src="./polygon-drawing/preview.png" />
             <div class="example-title">Polygon drawing</div>
             <div class="example-desc">Example of user polygon drawing</div>
             <div>
@@ -157,7 +79,9 @@
             </div>
         </div>
 <div class="example">
-            <img height="300" width="400" src="./simple/preview.png" />
+            <div class="example-preview">
+                <img height="300" width="400" src="./simple/preview.png" />
+            </div>
             <div class="example-title">Simple</div>
             <div class="example-desc">Simple example of map creating</div>
             <div>
@@ -168,7 +92,9 @@
             </div>
         </div>
 <div class="example">
-            <img height="300" width="400" src="./style-changing/preview.png" />
+            <div class="example-preview">
+                <img height="300" width="400" src="./style-changing/preview.png" />
+            </div>
             <div class="example-title">Style changing</div>
             <div class="example-desc">Applying a new style by interval</div>
             <div>
@@ -178,5 +104,129 @@
                 >
             </div>
         </div></div>
+    </div><div class="category">
+        <h2>Clusters</h2>
+        <div class="category-content"><div class="example">
+            <div class="example-preview">
+                <img height="300" width="400" src="./cluster-markers-arcs/preview.png" />
+            </div>
+            <div class="example-title">Clustered markers with arcs</div>
+            <div class="example-desc">Clustered markers with arc geometry</div>
+            <div>
+                <a href="./cluster-markers-arcs">[demo]</a>
+                <a href="https://github.com/2gis/mapgl-examples/tree/main/src/cluster-markers-arcs"
+                    >[source]</a
+                >
+            </div>
+        </div>
+<div class="example">
+            <div class="example-preview">
+                <img height="300" width="400" src="./cluster-markers-popups/preview.png" />
+            </div>
+            <div class="example-title">Clustered markers with popups</div>
+            <div class="example-desc">Show a popup after a click on the marker</div>
+            <div>
+                <a href="./cluster-markers-popups">[demo]</a>
+                <a href="https://github.com/2gis/mapgl-examples/tree/main/src/cluster-markers-popups"
+                    >[source]</a
+                >
+            </div>
+        </div>
+<div class="example">
+            <div class="example-preview">
+                <img height="300" width="400" src="./huge-clustering/preview.png" />
+            </div>
+            <div class="example-title">Huge clustering</div>
+            <div class="example-desc">Example of using a huge amount of markers with clustering</div>
+            <div>
+                <a href="./huge-clustering">[demo]</a>
+                <a href="https://github.com/2gis/mapgl-examples/tree/main/src/huge-clustering"
+                    >[source]</a
+                >
+            </div>
+        </div></div>
+    </div><div class="category">
+        <h2>Directions API</h2>
+        <div class="category-content"><div class="example">
+            <div class="example-preview">
+                <img height="300" width="400" src="./directions-floors/preview.png" />
+            </div>
+            <div class="example-title">Directions API floors</div>
+            <div class="example-desc">Using Directions API through floors plans</div>
+            <div>
+                <a href="./directions-floors">[demo]</a>
+                <a href="https://github.com/2gis/mapgl-examples/tree/main/src/directions-floors"
+                    >[source]</a
+                >
+            </div>
+        </div>
+<div class="example">
+            <div class="example-preview">
+                <img height="300" width="400" src="./directions-obstacles/preview.png" />
+            </div>
+            <div class="example-title">Directions API with obstacles</div>
+            <div class="example-desc">Using Directions API with obstacles</div>
+            <div>
+                <a href="./directions-obstacles">[demo]</a>
+                <a href="https://github.com/2gis/mapgl-examples/tree/main/src/directions-obstacles"
+                    >[source]</a
+                >
+            </div>
+        </div></div>
+    </div><div class="category">
+        <h2>GeoJSON</h2>
+        <div class="category-content"><div class="example">
+            <div class="example-preview">
+                <img height="300" width="400" src="./geojson-data-update/preview.png" />
+            </div>
+            <div class="example-title">GeoJSON data update</div>
+            <div class="example-desc">Changing data in GeoJSON source</div>
+            <div>
+                <a href="./geojson-data-update">[demo]</a>
+                <a href="https://github.com/2gis/mapgl-examples/tree/main/src/geojson-data-update"
+                    >[source]</a
+                >
+            </div>
+        </div>
+<div class="example">
+            <div class="example-preview">
+                <img height="300" width="400" src="./geojson-dragging/preview.png" />
+            </div>
+            <div class="example-title">GeoJSON point dragging</div>
+            <div class="example-desc">Example of GeoJSON point dragging</div>
+            <div>
+                <a href="./geojson-dragging">[demo]</a>
+                <a href="https://github.com/2gis/mapgl-examples/tree/main/src/geojson-dragging"
+                    >[source]</a
+                >
+            </div>
+        </div>
+<div class="example">
+            <div class="example-preview">
+                <img height="300" width="400" src="./geojson-hover-polygon/preview.png" />
+            </div>
+            <div class="example-title">Hover GeoJSON with Polygon</div>
+            <div class="example-desc">Hover GeoJSON data effect with additional Polygon object</div>
+            <div>
+                <a href="./geojson-hover-polygon">[demo]</a>
+                <a href="https://github.com/2gis/mapgl-examples/tree/main/src/geojson-hover-polygon"
+                    >[source]</a
+                >
+            </div>
+        </div>
+<div class="example">
+            <div class="example-preview">
+                <img height="300" width="400" src="./geojson-hover-setdata/preview.png" />
+            </div>
+            <div class="example-title">Hover GeoJSON setData</div>
+            <div class="example-desc">Hover effect with GeoJSON source setData method</div>
+            <div>
+                <a href="./geojson-hover-setdata">[demo]</a>
+                <a href="https://github.com/2gis/mapgl-examples/tree/main/src/geojson-hover-setdata"
+                    >[source]</a
+                >
+            </div>
+        </div></div>
+    </div></div>
     </body>
 </html>
