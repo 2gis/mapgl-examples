@@ -84,7 +84,7 @@ files
 let examplesHtml = '';
 Object.entries(examples).forEach(([category, htmlParts]) => {
     examplesHtml += /* HTML */ `<div class="category">
-        <h2>${category}</h2>
+        <h2 id="${category}"><a href="#${category}">${category}</a></h2>
         <div class="category-content">${htmlParts.join('\n')}</div>
     </div>`;
 });
