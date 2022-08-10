@@ -7,8 +7,8 @@
         <link rel="shortcut icon" type="image/png" href="../favicon.png" />
         <script src="../sourcebutton.js"></script>
 
-        <title>GeoJSON point dragging</title>
-        <meta name="description" content="Example of GeoJSON draggable point" />
+        <title>HTML marker drag</title>
+        <meta name="description" content="Example of HTML draggable marker" />
         <meta name="category" content="Dragging" />
 
         <style>
@@ -19,6 +19,18 @@
                 width: 100%;
                 height: 100%;
                 overflow: hidden;
+            }
+            .marker {
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                top: -10px;
+                left: -10px;
+                background: #f32121;
+                border-radius: 50%;
+                border: 2px solid white;
+                box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+                cursor: pointer;
             }
         </style>
     </head>
