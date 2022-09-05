@@ -181,7 +181,10 @@ map.on('click', (ev) => {
             x: ev.lngLat[0],
             y: ev.lngLat[1],
             floor_id: ev.targetData.floorId,
-            object_id: ev.targetData.id,
+
+            // TODO: в targetData.id у нас могут приходить как firmId, так и buildingId.
+            // В navi в object_id передавать buildingId нельзя, поэтому нужно научиться из различать.
+            // object_id: ev.targetData.id,
         });
     } else {
         points.push({
