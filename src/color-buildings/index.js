@@ -6,94 +6,94 @@ const map = new mapgl.Map('map', {
 });
 window.addEventListener('resize', () => map.invalidateSize());
 
-// Add colors to building IDs as featureState color attribute
+// Add new foo attibutes to 2GIS building data
 map.getDefaultSource().setFeatureStateMap({
     13933647002600966: {
-        color: '#ac0c44cc',
+        foo: 1,
     },
     '70030076160644458': {
-        color: '#7fad22cc',
+        foo: 2,
     },
     '70030076274107483': {
-        color: '#7e6f49cc',
+        foo: 3,
     },
     13933647002541366: {
-        color: '#882a6acc',
+        foo: 4,
     },
     '13933647002541481': {
-        color: '#5249c4cc',
+        foo: 5,
     },
     13933647002539914: {
-        color: '#2746a2cc',
+        foo: 6,
     },
     13933647002539460: {
-        color: '#f0d77ecc',
+        foo: 7,
     },
     '13933647002538895': {
-        color: '#db147fcc',
+        foo: 8,
     },
     '13933647002593717': {
-        color: '#0c8357cc',
+        foo: 9,
     },
     '70030076429567879': {
-        color: '#bfe88ccc',
+        foo: 10,
     },
     '70000001055925429': {
-        color: '#3b4108cc',
+        foo: 11,
     },
     13933647002944694: {
-        color: '#85d395cc',
+        foo: 12,
     },
     13933647002538332: {
-        color: '#efc699cc',
+        foo: 13,
     },
     '13933647002539065': {
-        color: '#d5a518cc',
+        foo: 14,
     },
     '13933647002539915': {
-        color: '#37b9b2cc',
+        foo: 15,
     },
     13933647002592246: {
-        color: '#e380a4cc',
+        foo: 16,
     },
     13933647002538570: {
-        color: '#29ba92cc',
+        foo: 17,
     },
     13933647002541364: {
-        color: '#6dfcbccc',
+        foo: 18,
     },
     13933647002591590: {
-        color: '#0872b9cc',
+        foo: 19,
     },
     '13933647002539913': {
-        color: '#5c6b68cc',
+        foo: 20,
     },
     13933647002605462: {
-        color: '#dac0c1cc',
+        foo: 21,
     },
     13933647002539344: {
-        color: '#130640cc',
+        foo: 22,
     },
     '13933647002592245': {
-        color: '#0cd631cc',
+        foo: 23,
     },
     '13933647002541367': {
-        color: '#464d18cc',
+        foo: 24,
     },
     '13933647050752911': {
-        color: '#30da09cc',
+        foo: 25,
     },
     13933647002605504: {
-        color: '#daecc7cc',
+        foo: 26,
     },
     13933647002593670: {
-        color: '#903bd5cc',
+        foo: 27,
     },
     '13933647002538185': {
-        color: '#82548ccc',
+        foo: 28,
     },
     '13933647002600971': {
-        color: '#c5f146cc',
+        foo: 29,
     },
 });
 
@@ -103,14 +103,30 @@ map.once('styleload', () => {
         id: 'my color house dwelling',
         type: 'polygonExtrusion',
         style: {
-            topColor: ['to-color', ['featureState', 'color']],
-            sideColor: ['to-color', ['featureState', 'color']],
+            topColor: [
+                'interpolate',
+                ['linear'],
+                ['featureState', 'foo'],
+                0,
+                '#ff0000cc',
+                30,
+                '#00ff00cc',
+            ],
+            sideColor: [
+                'interpolate',
+                ['linear'],
+                ['featureState', 'foo'],
+                0,
+                '#ff0000cc',
+                30,
+                '#00ff00cc',
+            ],
             strokeColor: '#000000',
             strokeWidth: 0.5,
         },
         filter: [
             'all',
-            ['match', ['featureState', 'color'], [null], false, true],
+            ['match', ['featureState', 'foo'], [null], false, true],
             [
                 'match',
                 ['get', 'db_sublayer'],
@@ -138,14 +154,22 @@ map.once('styleload', () => {
         id: 'color 3D models',
         type: 'buildingModel',
         style: {
-            color: ['to-color', ['featureState', 'color']],
+            color: [
+                'interpolate',
+                ['linear'],
+                ['featureState', 'foo'],
+                0,
+                '#ff0000cc',
+                30,
+                '#00ff00cc',
+            ],
             strokeColor: '#000000',
             strokeWidth: 0.1,
         },
         minzoom: 16,
         filter: [
             'all',
-            ['match', ['featureState', 'color'], [null], false, true],
+            ['match', ['featureState', 'foo'], [null], false, true],
             ['match', ['get', 'db_sublayer'], ['Building_model'], true, false],
         ],
     });
