@@ -173,17 +173,24 @@ const points = [
 ];
 
 map.on('click', (ev) => {
-    // WARNING: Do not use this in production code,
-    // until MapGL release with new map.getStyleState() method.
-    const styleState = map.getStyleState?.() || map._impl.state.styleState;
+    console.log(ev);
 
-    points.push({
-        type: 'pedo',
-        x: ev.lngLat[0],
-        y: ev.lngLat[1],
-        floor_id: styleState._activeFloorIds?.[0],
-        object_id: ev.target?.id,
-    });
+    if (ev.targetData?.floorId) {
+        points.push({
+            type: 'pedo',
+            x: ev.lngLat[0],
+            y: ev.lngLat[1],
+            floor_id: ev.targetData.floorId,
+            object_id: ev.targetData.id,
+        });
+    } else {
+        points.push({
+            type: 'pedo',
+            x: ev.lngLat[0],
+            y: ev.lngLat[1],
+        });
+    }
+
     points.splice(0, 1);
     fetchAndDrawRoute();
 });
