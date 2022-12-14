@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <script src="../sourcebutton.js"></script>
+
+        <title>Basic directions search app</title>
+        <meta name="description" content="Using Directions API in basic directions search app" />
+        <meta name="category" content="Directions API" />
+
+        <style>
+            html,
+            body,
+            #map {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                font-family: sans-serif;
+                overflow: hidden;
+            }
+
+            #controls {
+                position: absolute;
+                top: 0;
+                left: 0;
+                background: white;
+                padding: 10px;
+                box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+                border-radius: 0 0 4px 0;
+                max-width: 200px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+
+        <div id="controls">
+            <label>
+                Direction type:
+                <select id="direction-type">
+                    <option value="carrouting">carrouting</option>
+                    <option value="truck">truck</option>
+                </select>
+            </label>
+            <br />
+            <br />
+            <label>
+                Active direction index:
+                <select id="active-direction"></select>
+            </label>
+            <p>Also, you can switch the active route by clicking inactive line on the map</p>
+        </div>
+
+        <script src="https://mapgl.2gis.com/api/js/v1"></script>
+        <script src="./index.js"></script>
+    </body>
+</html>
