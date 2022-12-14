@@ -1,6 +1,5 @@
 // API key can be used on 2gis.github.io/mapgl-examples only!
 const key = 'a1893935-6834-4445-b97a-3405fb426c5b';
-const directionsKey = 'rujany4131';
 
 // Probably you don't need that. It's only for codepent js linter.
 const mapgl = window.mapgl;
@@ -101,7 +100,7 @@ function getQuery(type) {
 }
 
 function getDirection(type) {
-    return fetch(`https://catalog.api.2gis.ru/${type}/6.0.0/global?key=${directionsKey}`, {
+    return fetch(`https://catalog.api.2gis.ru/${type}/6.0.0/global?key=${key}`, {
         method: 'post',
         body: JSON.stringify(getQuery(type)),
     })
