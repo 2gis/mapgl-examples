@@ -8,6 +8,82 @@ const map = new mapgl.Map('container', {
     maxZoom: 20.7,
 });
 
+function sleep(time) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, time);
+    });
+}
+  
+function waitIdle() {
+    return new Promise((resolve) => {
+        map.once('idle', resolve);
+    });
+}
+  
+async function runScenario(scenario) {
+    for (const part of scenario) {
+        // console.log(part);
+        const duration = part.duration || 0;
+        if (part.zoom !== undefined) {
+            const params = {
+                duration,
+                animateHeight: true,
+            };
+            if (part.zoomEasing) {
+                params.easing = part.zoomEasing;
+            }
+            map.setZoom(part.zoom, params);
+        }
+        if (part.pitch !== undefined) {
+            const params = {
+                duration,
+            };
+            if (part.pitchEasing) {
+                params.easing = part.pitchEasing;
+            }
+            map.setPitch(part.pitch, params);
+        }
+        if (part.snowIntensity !== undefined) {
+            const intensity = part.snowIntensity;
+            snow.setOptions({
+                enabled: intensity > 0,
+                particleNumber: intensity * 1000,
+                velocityZ: 500 + intensity * 7,
+                velocityX: intensity * 4,
+                dispersion: intensity,
+            })
+        }
+        if (part.center) {
+            const params = {
+                duration,
+            };
+            if (part.centerEasing) {
+                params.easing = part.centerEasing;
+            }
+            map.setCenter(part.center, params);
+        }
+        if (part.rotation !== undefined) {
+            const params = {
+                duration,
+            };
+            if (part.rotationEasing) {
+                params.easing = part.rotationEasing;
+            }
+            map.setRotation(part.rotation, { ...params, normalize: false });
+        }
+  
+        if (typeof part.f === 'function') {
+            part.f();
+        }
+  
+        if (part.waitIdle) {
+            await waitIdle();
+        } else {
+            await sleep(duration);
+        }
+    }
+}
+
 const plugin = new mapgl.GltfPlugin(map, {
     modelsLoadStrategy: 'waitAll',
     ambientLight: { color: '#ffffff', intencity: 3 },
