@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.ea9ffa1d.css",
+    "main.js": "/static/js/main.ae62bc82.js",
+    "static/js/787.72148224.chunk.js": "/static/js/787.72148224.chunk.js",
+    "index.html": "/index.html",
+    "static/media/urbi.svg": "/static/media/urbi.5e362a13f356d40ca5d758df4cd6550d.svg",
+    "main.ea9ffa1d.css.map": "/static/css/main.ea9ffa1d.css.map",
+    "main.ae62bc82.js.map": "/static/js/main.ae62bc82.js.map",
+    "787.72148224.chunk.js.map": "/static/js/787.72148224.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ea9ffa1d.css",
+    "static/js/main.ae62bc82.js"
+  ]
+}
