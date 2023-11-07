@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/mapgl-examples/ald-tiles/static/css/main.ea9ffa1d.css",
-    "main.js": "/mapgl-examples/ald-tiles/static/js/main.95670d5f.js",
+    "main.js": "/mapgl-examples/ald-tiles/static/js/main.e34576f8.js",
     "static/js/787.72148224.chunk.js": "/mapgl-examples/ald-tiles/static/js/787.72148224.chunk.js",
     "index.html": "/mapgl-examples/ald-tiles/index.html",
     "static/media/urbi.svg": "/mapgl-examples/ald-tiles/static/media/urbi.5e362a13f356d40ca5d758df4cd6550d.svg",
     "main.ea9ffa1d.css.map": "/mapgl-examples/ald-tiles/static/css/main.ea9ffa1d.css.map",
-    "main.95670d5f.js.map": "/mapgl-examples/ald-tiles/static/js/main.95670d5f.js.map",
+    "main.e34576f8.js.map": "/mapgl-examples/ald-tiles/static/js/main.e34576f8.js.map",
     "787.72148224.chunk.js.map": "/mapgl-examples/ald-tiles/static/js/787.72148224.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ea9ffa1d.css",
-    "static/js/main.95670d5f.js"
+    "static/js/main.e34576f8.js"
   ]
 }
