@@ -13,13 +13,13 @@ function sleep(time) {
         setTimeout(resolve, time);
     });
 }
-
+  
 function waitIdle() {
     return new Promise((resolve) => {
         map.once('idle', resolve);
     });
 }
-
+  
 async function runScenario(scenario) {
     for (const part of scenario) {
         // console.log(part);
@@ -71,11 +71,11 @@ async function runScenario(scenario) {
             }
             map.setRotation(part.rotation, { ...params, normalize: false });
         }
-
+  
         if (typeof part.f === 'function') {
             part.f();
         }
-
+  
         if (part.waitIdle) {
             await waitIdle();
         } else {
