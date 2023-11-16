@@ -20,6 +20,21 @@ function waitIdle() {
     });
 }
 
+function removeLabels() {
+    if (map._impl.currentPendingStyle) {
+        map.once('styleload', () => {
+            labelIds.forEach((id) => {
+                map.removeLayer(id);
+            });
+        });
+        return;
+    }
+
+    labelIds.forEach((id) => {
+        map.removeLayer(id);
+    });
+}
+
 async function runScenario(scenario) {
     for (const part of scenario) {
         // console.log(part);
@@ -51,7 +66,7 @@ async function runScenario(scenario) {
                 velocityZ: 500 + intensity * 7,
                 velocityX: intensity * 4,
                 dispersion: intensity,
-            })
+            });
         }
         if (part.center) {
             const params = {
@@ -85,7 +100,7 @@ async function runScenario(scenario) {
 }
 
 const plugin = new mapgl.GltfPlugin(map, {
-    modelsLoadStrategy: 'waitAll',
+    modelsLoadStrategy: 'dontWaitAll',
     ambientLight: { color: '#ffffff', intencity: 3 },
     modelsBaseUrl: 'https://disk.2gis.com/digital-twin/models_s3/realty_ads/sakura/',
     poiConfig: {
@@ -100,6 +115,7 @@ const plugin = new mapgl.GltfPlugin(map, {
         intencity: 0.1,
     },
 });
+
 const realtyScene = [
     {
         modelId: 'sakuraenv',
@@ -117,14 +133,10 @@ const realtyScene = [
     },
     {
         modelId: 'sakura1',
-        coordinates: [
-            82.93554344,
-            55.0245921
-        ],
+        coordinates: [82.93554344, 55.0245921],
         rotateX: 90,
         rotateY: 54.42,
-        scale: 175.1
-        ,
+        scale: 175.1,
         modelUrl: 'sakura1.glb',
         linkedIds: ['70030076322363650'],
         mapOptions: {
@@ -135,8 +147,8 @@ const realtyScene = [
         },
         popupOptions: {
             coordinates: [82.93553028610054, 55.024618576859815],
-            title: 'Sakura 1',
-            description: 'Ready <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ',
+            title: 'Дом 1',
+            description: 'Срок сдачи: 2 квартал 2024 г.',
         },
         floors: [
             {
@@ -149,7 +161,39 @@ const realtyScene = [
                     zoom: 20.3,
                     rotation: 54.116509698935765,
                 },
-                poiGroups: [],
+                poiGroups: [
+                    {
+                        id: 101,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 1,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.93566283730352, 55.02431170923094],
+                                label: 'Офис 1\n32.78 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93546027946417, 55.024505474267606],
+                                label: 'Офис 4\n35.2 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93570374046925, 55.024836877623045],
+                                label: 'Офис 9\n96.45 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                        ],
+                    },
+                ],
             },
             {
                 id: '2',
@@ -197,7 +241,60 @@ const realtyScene = [
                     zoom: 20,
                     rotation: 54.116509698935765,
                 },
-                poiGroups: [],
+                poiGroups: [
+                    {
+                        id: 105,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 14,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.93532879915665, 55.024610488879894],
+                                label: '2С\n63.99 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.9354390072042, 55.02455512375257],
+                                label: '1К\n50.36 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93547884848776, 55.02451023848019],
+                                label: '3К\n95.78 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93555864586605, 55.0243604060633],
+                                label: '2К\n62.34 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93562451639922, 55.02430149414303],
+                                label: '3К\n78.95 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.9357979990563, 55.02482897466938],
+                                label: '2К\n64.44 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                        ],
+                    },
+                ],
             },
             {
                 id: '6',
@@ -386,7 +483,7 @@ const realtyScene = [
                 mapOptions: {
                     center: [82.93566657544838, 55.02457252304874],
                     pitch: 0.001,
-                    zoom: 19.30,
+                    zoom: 19.3,
                     rotation: 54.116509698935765,
                 },
                 poiGroups: [],
@@ -437,16 +534,66 @@ const realtyScene = [
                     zoom: 19.18,
                     rotation: 54.116509698935765,
                 },
-                poiGroups: [],
+                poiGroups: [
+                    {
+                        id: 125,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 70,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.93532879915665, 55.024610488879894],
+                                label: '2С\n63.99 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.9354390072042, 55.02455512375257],
+                                label: '1К\n50.36 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93547884848776, 55.02451023848019],
+                                label: '3К\n95.78 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93555864586605, 55.0243604060633],
+                                label: '2К\n62.34 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93562451639922, 55.02430149414303],
+                                label: '3К\n78.95 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.9357979990563, 55.02482897466938],
+                                label: '2К\n64.44 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                        ],
+                    },
+                ],
             },
         ],
     },
     {
         modelId: 'sakura2',
-        coordinates: [
-            82.9355424,
-            55.0245912
-        ],
+        coordinates: [82.9355424, 55.0245912],
         rotateX: 90,
         rotateY: 54.42,
         scale: 175.1,
@@ -460,8 +607,8 @@ const realtyScene = [
         },
         popupOptions: {
             coordinates: [82.93611632244958, 55.02510191007816],
-            title: 'Sakura 2',
-            description: 'Ready <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ',
+            title: 'Дом 2',
+            description: 'Срок сдачи: 1 квартал 2025 г.',
         },
         floors: [
             {
@@ -474,7 +621,39 @@ const realtyScene = [
                     zoom: 20.3,
                     rotation: 54.116509698935765,
                 },
-                poiGroups: [],
+                poiGroups: [
+                    {
+                        id: 201,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 1,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.93636813698447, 55.024784207565496],
+                                label: 'Офис 1\n32.78 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93617230960257, 55.02497927886716],
+                                label: 'Офис 4\n35.2 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93638067181605, 55.025303076292325],
+                                label: 'Офис 9\n96.45 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                        ],
+                    },
+                ],
             },
             {
                 id: '2',
@@ -522,7 +701,60 @@ const realtyScene = [
                     zoom: 20,
                     rotation: 54.116509698935765,
                 },
-                poiGroups: [],
+                poiGroups: [
+                    {
+                        id: 205,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 14,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.93601985444766, 55.02507740479571],
+                                label: '2С\n63.99 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.9361317747682, 55.025020237259675],
+                                label: '1К\n50.36 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93616589717568, 55.02497739671335],
+                                label: '3К\n95.78 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93624378984119, 55.02482336926575],
+                                label: '2К\n62.34 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93633491528325, 55.024774067627696],
+                                label: '3К\n78.95 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93648000007295, 55.02530416124139],
+                                label: '2К\n64.44 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                        ],
+                    },
+                ],
             },
             {
                 id: '6',
@@ -711,7 +943,7 @@ const realtyScene = [
                 mapOptions: {
                     center: [82.93634821778734, 55.02503592437247],
                     pitch: 0.001,
-                    zoom: 19.30,
+                    zoom: 19.3,
                     rotation: 54.116509698935765,
                 },
                 poiGroups: [],
@@ -762,16 +994,66 @@ const realtyScene = [
                     zoom: 19.18,
                     rotation: 54.116509698935765,
                 },
-                poiGroups: [],
-            }
+                poiGroups: [
+                    {
+                        id: 225,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 70,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.93601985444766, 55.02507740479571],
+                                label: '2С\n63.99 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.9361317747682, 55.025020237259675],
+                                label: '1К\n50.36 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93616589717568, 55.02497739671335],
+                                label: '3К\n95.78 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93624378984119, 55.02482336926575],
+                                label: '2К\n62.34 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93633491528325, 55.024774067627696],
+                                label: '3К\n78.95 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93648000007295, 55.02530416124139],
+                                label: '2К\n64.44 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                        ],
+                    },
+                ],
+            },
         ],
     },
     {
         modelId: 'sakura3',
-        coordinates: [
-            82.9355435,
-            55.0245893
-        ],
+        coordinates: [82.9355435, 55.0245893],
         rotateX: 90,
         rotateY: 54.49,
         scale: 175.1,
@@ -785,8 +1067,8 @@ const realtyScene = [
         },
         popupOptions: {
             coordinates: [82.93672730100035, 55.025536774587046],
-            title: 'Sakura 3',
-            description: 'Ready <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ',
+            title: 'Дом 3',
+            description: 'Срок сдачи: 4 квартал 2026 г.',
         },
         floors: [
             {
@@ -799,7 +1081,39 @@ const realtyScene = [
                     zoom: 20.3,
                     rotation: 54.116509698935765,
                 },
-                poiGroups: [],
+                poiGroups: [
+                    {
+                        id: 301,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 1,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.93704062007214, 55.025239796684595],
+                                label: 'Офис 1\n32.78 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93684968529901, 55.025431886722636],
+                                label: 'Офис 4\n35.2 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93706158472665, 55.02575801144653],
+                                label: 'Офис 9\n96.45 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                        ],
+                    },
+                ],
             },
             {
                 id: '2',
@@ -847,7 +1161,60 @@ const realtyScene = [
                     zoom: 20,
                     rotation: 54.116509698935765,
                 },
-                poiGroups: [],
+                poiGroups: [
+                    {
+                        id: 305,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 14,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.9367027271309, 55.02553047927582],
+                                label: '2С\n63.99 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93681330397604, 55.02547395738103],
+                                label: '1К\n50.36 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93684687574424, 55.02543495080662],
+                                label: '3К\n95.78 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93692926000382, 55.02528252055639],
+                                label: '2К\n62.34 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93700650192216, 55.02522814050097],
+                                label: '3К\n78.95 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93716303866796, 55.02575846606976],
+                                label: '2К\n64.44 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                        ],
+                    },
+                ],
             },
             {
                 id: '6',
@@ -1036,7 +1403,7 @@ const realtyScene = [
                 mapOptions: {
                     center: [82.93704187736921, 55.025489666757025],
                     pitch: 0.001,
-                    zoom: 19.30,
+                    zoom: 19.3,
                     rotation: 54.116509698935765,
                 },
                 poiGroups: [],
@@ -1087,97 +1454,105 @@ const realtyScene = [
                     zoom: 19.18,
                     rotation: 54.116509698935765,
                 },
-                poiGroups: [],
-            },],
+                poiGroups: [
+                    {
+                        id: 325,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 70,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.9367027271309, 55.02553047927582],
+                                label: '2С\n63.99 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93681330397604, 55.02547395738103],
+                                label: '1К\n50.36 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93684687574424, 55.02543495080662],
+                                label: '3К\n95.78 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93692926000382, 55.02528252055639],
+                                label: '2К\n62.34 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93700650192216, 55.02522814050097],
+                                label: '3К\n78.95 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                            {
+                                coordinates: [82.93716303866796, 55.02575846606976],
+                                label: '2К\n64.44 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/vybor-kvartir/?SECTION_ID=384',
+                                },
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
     },
 ];
 
 plugin.addRealtyScene(realtyScene);
 
-
-// {
-//     id: '2',
-//     text: '2',
-//     modelUrl: 'standpointtowers4-2.glb',
-//     mapOptions: {
-//         center: [55.27101659214413, 25.19692572574951],
-//         pitch: 17.8,
-//         zoom: 20.8,
-//         rotation: 137.02588223579758,
-//     },
-//     poiGroups: [
-//         {
-//             id: 1111,
-//             type: 'primary',
-//             minZoom: 18.9,
-//             elevation: 10,
-//             fontSize: 9,
-//             fontColor: '#3a3a3a',
-//             data: [
-//                 {
-//                     coordinates: [55.27095943017267, 25.197085861856678],
-//                     label: '1 Bed\n323 sqft',
-//                     userData: {
-//                         url: 'https://dev.urbi.ae/',
-//                     },
-//                 },
-//                 {
-//                     coordinates: [55.271011424317585, 25.19704189077632],
-//                     label: '1 Bed\n360 sqft',
-//                     userData: {
-//                         url: 'https://dev.urbi.ae/',
-//                     },
-//                 },
-//                 {
-//                     coordinates: [55.27086972852069, 25.196999662434976],
-//                     label: '1 Bed\n330 sqft',
-//                     userData: {
-//                         url: 'https://dev.urbi.ae/',
-//                     },
-//                 },
-//                 {
-//                     coordinates: [55.2711596091742, 25.196857840495],
-//                     label: '1 Bed\n690 sqft',
-//                     userData: {
-//                         url: 'https://dev.urbi.ae/',
-//                     },
-//                 },
-//                 {
-//                     coordinates: [55.2710044354644, 25.19689784165797],
-//                     label: '1 Bed\n600 sqft',
-//                     userData: {
-//                         url: 'https://dev.urbi.ae/',
-//                     },
-//                 },
-//                 {
-//                     coordinates: [55.27109216906766, 25.196807837435273],
-//                     label: '4 Beds\n1800 sqft',
-//                     userData: {
-//                         url: 'https://dev.urbi.ae/',
-//                     },
-//                 },
-//                 {
-//                     coordinates: [55.27114979328282, 25.196936631205745],
-//                     label: '2 Beds\n1500 sqft',
-//                     userData: {
-//                         url: 'https://dev.urbi.ae/',
-//                     },
-//                 },
-//                 {
-//                     coordinates: [55.27094029099825, 25.19695530862026],
-//                     label: '2 Beds\n1215 sqft',
-//                     userData: {
-//                         url: 'https://dev.urbi.ae/',
-//                     },
-//                 },
-//                 {
-//                     coordinates: [55.271084685746885, 25.196991799213222],
-//                     label: '3 Beds\n2400 sqft',
-//                     userData: {
-//                         url: 'https://dev.urbi.ae/',
-//                     },
-//                 },
-//             ],
-//         },
-//     ],
-// },
+const labelIds = [
+    '43556',
+    '44814',
+    '73948',
+    '632416',
+    '227',
+    '159784',
+    '135503',
+    '740815',
+    '682782',
+    '924721',
+    '272603',
+    '501891',
+    '77098',
+    '711817',
+    '758882',
+    '113080',
+    '5946',
+    '661538',
+    '805874',
+    '815549',
+    '191129',
+    '309294',
+    '346254',
+    '444276',
+    '615525',
+    '832861',
+    'barrier',
+    'gate',
+    '444318',
+    'porch',
+    'porch under house',
+    'traffic light',
+    '246968',
+    '853413',
+    '533740',
+    '657681',
+    '776122',
+    '949217',
+    'city caption',
+];
