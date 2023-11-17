@@ -1563,7 +1563,7 @@ const realtyScene = [
             {
                 id: '23',
                 text: '23',
-                modelUrl: 'sakura1floor23.glb',
+                modelUrl: 'sakura1floor23_fur.glb',
                 mapOptions: {
                     center: [82.93566657544838, 55.02457252304874],
                     pitch: 0.001,
