@@ -8,6 +8,10 @@ const map = new mapgl.Map('container', {
     maxZoom: 21,
 });
 
+const needPreload = new URL(location.href).searchParams.has('preload');
+const curtain = document.getElementById('curtain');
+curtain.style.display = 'block';
+
 function sleep(time) {
     return new Promise((resolve) => {
         setTimeout(resolve, time);
@@ -100,7 +104,7 @@ async function runScenario(scenario) {
 }
 
 const plugin = new mapgl.GltfPlugin(map, {
-    modelsLoadStrategy: 'dontWaitAll',
+    modelsLoadStrategy: needPreload ? 'waitAll' : 'dontWaitAll',
     ambientLight: { color: '#ffffff', intencity: 3 },
     modelsBaseUrl: 'https://disk.2gis.com/digital-twin/models_s3/realty_ads/sakura/',
     poiConfig: {
@@ -2679,7 +2683,9 @@ const realtyScene = [
     },
 ];
 
-plugin.addRealtyScene(realtyScene);
+plugin.addRealtyScene(realtyScene).then(() => {
+    curtain.style.display = 'none';
+});
 
 const labelIds = [
     '43556',
