@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Custom user datasets demo",
+  "name": "Custom user datasets demo",
   "icons": [
     {
       "src": "favicon.ico",
