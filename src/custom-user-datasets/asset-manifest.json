@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/mapgl-examples/custom-user-datasets/static/css/main.ea5b1f40.css",
-    "main.js": "/mapgl-examples/custom-user-datasets/static/js/main.d674e2bd.js",
+    "main.css": "/mapgl-examples/custom-user-datasets/static/css/main.10f70e05.css",
+    "main.js": "/mapgl-examples/custom-user-datasets/static/js/main.2bfb7567.js",
     "static/js/787.72148224.chunk.js": "/mapgl-examples/custom-user-datasets/static/js/787.72148224.chunk.js",
     "static/media/circleRed.svg": "/mapgl-examples/custom-user-datasets/static/media/circleRed.8de2b7c9835c48c5db51a2c383813838.svg",
     "static/media/circle.svg": "/mapgl-examples/custom-user-datasets/static/media/circle.1bd7746f1d364d62037035bd94c68eae.svg",
@@ -10,12 +10,12 @@
     "static/media/dot.svg": "/mapgl-examples/custom-user-datasets/static/media/dot.877978dc3ede46cfdf83681396db31eb.svg",
     "static/media/dotBlue.svg": "/mapgl-examples/custom-user-datasets/static/media/dotBlue.fc22855164b076823d427f5d4fd44085.svg",
     "static/media/urbi.svg": "/mapgl-examples/custom-user-datasets/static/media/urbi.5e362a13f356d40ca5d758df4cd6550d.svg",
-    "main.ea5b1f40.css.map": "/mapgl-examples/custom-user-datasets/static/css/main.ea5b1f40.css.map",
-    "main.d674e2bd.js.map": "/mapgl-examples/custom-user-datasets/static/js/main.d674e2bd.js.map",
+    "main.10f70e05.css.map": "/mapgl-examples/custom-user-datasets/static/css/main.10f70e05.css.map",
+    "main.2bfb7567.js.map": "/mapgl-examples/custom-user-datasets/static/js/main.2bfb7567.js.map",
     "787.72148224.chunk.js.map": "/mapgl-examples/custom-user-datasets/static/js/787.72148224.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ea5b1f40.css",
-    "static/js/main.d674e2bd.js"
+    "static/css/main.10f70e05.css",
+    "static/js/main.2bfb7567.js"
   ]
 }
