@@ -156,6 +156,141 @@ const realtyScene = [
         },
         floors: [
             {
+                id: '-3',
+                text: '-3',
+                modelUrl: 'sakuragarage3.glb',
+                isUnderground: true,
+                mapOptions: {
+                    center: [82.93613846640994, 55.02487619897599],
+                    pitch: 0.001,
+                    zoom: 19.6,
+                    rotation: 54.4895,
+                },
+                poiGroups: [
+                    {
+                        id: 1003,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 0.001,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.93602504445663, 55.02479674835337],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93572786693463, 55.024460831819475],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93665717644525, 55.025211680011715],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                id: '-2',
+                text: '-2',
+                modelUrl: 'sakuragarage2.glb',
+                isUnderground: true,
+                mapOptions: {
+                    center: [82.93613846640994, 55.02487619897599],
+                    pitch: 0.001,
+                    zoom: 19.6,
+                    rotation: 54.4895,
+                },
+                poiGroups: [
+                    {
+                        id: 1002,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 3,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.93602504445663, 55.02479674835337],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93572786693463, 55.024460831819475],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93665717644525, 55.025211680011715],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                id: '-1',
+                text: '-1',
+                modelUrl: 'sakuragarage1.glb',
+                isUnderground: true,
+                mapOptions: {
+                    center: [82.93613846640994, 55.02487619897599],
+                    pitch: 0.001,
+                    zoom: 19.6,
+                    rotation: 54.4895,
+                },
+                poiGroups: [
+                    {
+                        id: 1001,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 6,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.93602504445663, 55.02479674835337],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93572786693463, 55.024460831819475],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93665717644525, 55.025211680011715],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
                 id: '1',
                 text: '1',
                 modelUrl: 'sakura1floor1.glb',
@@ -1782,6 +1917,141 @@ const realtyScene = [
         },
         floors: [
             {
+                id: '-3',
+                text: '-3',
+                modelUrl: 'sakuragarage3.glb',
+                isUnderground: true,
+                mapOptions: {
+                    center: [82.93613846640994, 55.02487619897599],
+                    pitch: 0.001,
+                    zoom: 19.6,
+                    rotation: 54.4895,
+                },
+                poiGroups: [
+                    {
+                        id: 2003,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 0.001,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.93602504445663, 55.02479674835337],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93572786693463, 55.024460831819475],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93665717644525, 55.025211680011715],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                id: '-2',
+                text: '-2',
+                modelUrl: 'sakuragarage2.glb',
+                isUnderground: true,
+                mapOptions: {
+                    center: [82.93613846640994, 55.02487619897599],
+                    pitch: 0.001,
+                    zoom: 19.6,
+                    rotation: 54.4895,
+                },
+                poiGroups: [
+                    {
+                        id: 2002,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 3,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.93602504445663, 55.02479674835337],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93572786693463, 55.024460831819475],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93665717644525, 55.025211680011715],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                id: '-1',
+                text: '-1',
+                modelUrl: 'sakuragarage1.glb',
+                isUnderground: true,
+                mapOptions: {
+                    center: [82.93613846640994, 55.02487619897599],
+                    pitch: 0.001,
+                    zoom: 19.6,
+                    rotation: 54.4895,
+                },
+                poiGroups: [
+                    {
+                        id: 2001,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 6,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.93602504445663, 55.02479674835337],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93572786693463, 55.024460831819475],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93665717644525, 55.025211680011715],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
                 id: '1',
                 text: '1',
                 modelUrl: 'sakura2floor1.glb',
@@ -2241,6 +2511,141 @@ const realtyScene = [
             description: 'Срок сдачи: 4 квартал 2026 г.',
         },
         floors: [
+            {
+                id: '-3',
+                text: '-3',
+                modelUrl: 'sakuragarage3.glb',
+                isUnderground: true,
+                mapOptions: {
+                    center: [82.93613846640994, 55.02487619897599],
+                    pitch: 0.001,
+                    zoom: 19.6,
+                    rotation: 54.4895,
+                },
+                poiGroups: [
+                    {
+                        id: 3003,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 0.001,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.93602504445663, 55.02479674835337],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93572786693463, 55.024460831819475],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93665717644525, 55.025211680011715],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                id: '-2',
+                text: '-2',
+                modelUrl: 'sakuragarage2.glb',
+                isUnderground: true,
+                mapOptions: {
+                    center: [82.93613846640994, 55.02487619897599],
+                    pitch: 0.001,
+                    zoom: 19.6,
+                    rotation: 54.4895,
+                },
+                poiGroups: [
+                    {
+                        id: 3002,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 3,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.93602504445663, 55.02479674835337],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93572786693463, 55.024460831819475],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93665717644525, 55.025211680011715],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                id: '-1',
+                text: '-1',
+                modelUrl: 'sakuragarage1.glb',
+                isUnderground: true,
+                mapOptions: {
+                    center: [82.93613846640994, 55.02487619897599],
+                    pitch: 0.001,
+                    zoom: 19.6,
+                    rotation: 54.4895,
+                },
+                poiGroups: [
+                    {
+                        id: 3001,
+                        type: 'primary',
+                        minZoom: 18.5,
+                        elevation: 6,
+                        fontSize: 9,
+                        fontColor: '#3a3a3a',
+                        data: [
+                            {
+                                coordinates: [82.93602504445663, 55.02479674835337],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93572786693463, 55.024460831819475],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                            {
+                                coordinates: [82.93665717644525, 55.025211680011715],
+                                label: 'П\n13.25 м²',
+                                userData: {
+                                    url: 'https://xn--80aafcmzc2ckm5b.xn--p1ai/parking/?project=4303',
+                                },
+                            },
+                        ],
+                    },
+                ],
+            },
             {
                 id: '1',
                 text: '1',
