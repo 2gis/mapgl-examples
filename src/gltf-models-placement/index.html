@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <title>MapGL API - glTF models placement</title>
+        <meta name="description" content="Demo of glTF models placement on the map" />
+        <meta name="category" content="Common" />
+        <style>
+            html,
+            body,
+            #map {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+
+            html {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 12px;
+            }
+
+            #main-wrap {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                bottom: 10px;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: start;
+                align-items: center;
+
+                padding: 10px;
+                box-sizing: border-box;
+                background-color: #ffffffcc;
+                border-radius: 10px;
+
+                width: 300px;
+                overflow: hidden;
+            }
+
+            #main-wrap > *:nth-child(n + 1) {
+                margin-top: 10px;
+            }
+
+            #bar {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+                max-height: calc(100% - 100px - 40px);
+            }
+
+            #config-button {
+                width: 100%;
+                height: 40px;
+                background-color: #fff;
+                border: 1px solid #ccc;
+
+                box-sizing: border-box;
+                border-radius: 5px;
+                text-align: center;
+            }
+
+            #config-button:hover {
+                transition: background-color 0.15s ease-in-out;
+                background-color: #f2f2f2;
+            }
+
+            #map-controls {
+                display: flex;
+                flex-direction: column;
+                justify-content: start;
+                align-items: start;
+
+                width: 100%;
+                height: 100px;
+            }
+
+            #map-controls input[type='number'] {
+                width: 60px;
+            }
+
+            #map-controls > div:nth-child(n + 2) {
+                margin-top: 5px;
+            }
+
+            #map-controls > div > * {
+                margin-right: 5px;
+            }
+
+            #model-add-info {
+                display: block;
+                transform: translateY(-50%);
+                position: absolute;
+                top: 50%;
+                left: 10px;
+                right: 10px;
+                text-align: center;
+                color: #828282;
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            #model-list {
+                display: flex;
+                flex-direction: column;
+                justify-content: start;
+                align-items: start;
+                overflow-x: hidden;
+                overflow-y: auto;
+                width: 100%;
+            }
+
+            #add-model-input {
+                position: absolute;
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            #add-model-label,
+            .model-item,
+            #map-controls > div {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            #add-model-label {
+                margin-top: 10px;
+                width: 100%;
+                min-height: 40px;
+                box-sizing: border-box;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                padding: 10px;
+                background-color: #fff;
+                user-select: none;
+            }
+
+            #add-model-label:hover {
+                transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+                background-color: #f2f2f2;
+                border-color: #f2f2f2;
+            }
+
+            .control {
+                cursor: pointer;
+            }
+
+            .model-item {
+                position: relative;
+                width: 95%;
+                height: 40px;
+                box-sizing: border-box;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                padding: 10px;
+                background-color: #fff;
+            }
+
+            .model-item:not(:first-child) {
+                margin-top: 10px;
+            }
+
+            .model-item.hovered {
+                transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+                background-color: #f2f2f2;
+                border-color: #f2f2f2;
+            }
+
+            .model-item.selected {
+                transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+                background-color: #ccc;
+                border-color: #ccc;
+            }
+
+            .model-item > svg {
+                width: 12px;
+                height: 12px;
+            }
+
+            .model-item > svg:hover {
+                fill: #f00;
+            }
+
+            .model-item > span {
+                display: inline-block;
+                user-select: none;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                max-width: calc(100% - 24px);
+            }
+
+            #model-params {
+                position: absolute;
+                top: 10px;
+                left: 320px;
+
+                display: none;
+
+                width: 300px;
+                padding: 10px;
+                box-sizing: border-box;
+                background-color: #ffffffcc;
+                border-radius: 10px;
+
+                overflow: hidden;
+                user-select: none;
+            }
+
+            #model-params > div {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #model-params svg {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+            }
+
+            #model-params svg:hover {
+                fill: #f00;
+            }
+
+            #model-params h4 {
+                margin-top: 10px;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            #model-params p {
+                font-size: 10px;
+                color: #828282;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+
+            #model-params > div,
+            #model-params > div > div {
+                width: 100%;
+            }
+
+            .model-params-item {
+                display: flex;
+                flex-direction: row;
+                justify-content: left;
+                align-items: center;
+                width: 100%;
+                margin-left: 5px;
+            }
+
+            .model-params-item:not(:last-child) {
+                margin-bottom: 10px;
+            }
+
+            .model-params-item > * {
+                margin-right: 5px;
+            }
+
+            .model-params-item > label {
+                display: block;
+                width: 85px;
+                text-align: left;
+            }
+
+            .model-params-item > textarea {
+                min-height: 100px;
+            }
+
+            .model-params-item > input[type='number'] {
+                width: 30%;
+            }
+
+            .mapgl-capture {
+                cursor: move !important;
+            }
+
+            .mapgl-scale {
+                cursor: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjhweCIgaGVpZ2h0PSIyOHB4IiB2aWV3Qm94PSItMi40IC0yLjQgMjguODAgMjguODAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgZmlsbD0iIzAwMDAwMCIgc3Ryb2tlPSIjMDAwMDAwIj4KPGcgc3Ryb2tlLXdpZHRoPSIwIi8+CjxnIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlPSIjQ0NDQ0NDIiBzdHJva2Utd2lkdGg9IjAuMTQ0Ii8+CjxnPgo8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE5Mi4wMDAwMDAsIC05Ni4wMDAwMDApIiBmaWxsLXJ1bGU9Im5vbnplcm8iPgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxOTIuMDAwMDAwLCA5Ni4wMDAwMDApIj4KPHBhdGggZD0iTTI0LDAgTDI0LDI0IEwwLDI0IEwwLDAgTDI0LDAgWiBNMTIuNTkzNDkwMSwyMy4yNTc4NDEgTDEyLjU4MTk0MDIsMjMuMjU5NTEzMSBMMTIuNTEwODc3NywyMy4yOTUwNDM5IEwxMi40OTE4NzkxLDIzLjI5ODc0NjkgTDEyLjQ5MTg3OTEsMjMuMjk4NzQ2OSBMMTIuNDc2NzE1MiwyMy4yOTUwNDM5IEwxMi40MDU2NTQ4LDIzLjI1OTUxMzEgQzEyLjM5NTgyMjksMjMuMjU2MzY2MiAxMi4zODcwNDkzLDIzLjI1OTAyMzUgMTIuMzgyMTQyMSwyMy4yNjQ5MDc0IEwxMi4zNzgwMzIzLDIzLjI3NTgzMSBMMTIuMzYwOTQxLDIzLjcwMzEwOTcgTDEyLjM2NTg5NDcsMjMuNzIzNDk5NCBMMTIuMzc2OTA0OCwyMy43MzU3MTM5IEwxMi40ODA0Nzc3LDIzLjgwOTY5MzEgTDEyLjQ5NTM0OTEsMjMuODEzNjEzNCBMMTIuNDk1MzQ5MSwyMy44MTM2MTM0IEwxMi41MDcxMTUyLDIzLjgwOTY5MzEgTDEyLjYxMDY5MDIsMjMuNzM1NzEzOSBMMTIuNjIzMjkzOCwyMy43MTk2NzMzIEwxMi42MjMyOTM4LDIzLjcxOTY3MzMgTDEyLjYyNjY1MjcsMjMuNzAzMTA5NyBMMTIuNjA5NTYxLDIzLjI3NTgzMSBDMTIuNjA3NTcyNCwyMy4yNjU3MDEzIDEyLjYwMTAxMTIsMjMuMjU5Mjk5MyAxMi41OTM0OTAxLDIzLjI1Nzg0MSBMMTIuNTkzNDkwMSwyMy4yNTc4NDEgWiBNMTIuODU4MzkwNiwyMy4xNDUyODYyIEwxMi44NDQ1NDg1LDIzLjE0NzMwNzIgTDEyLjY1OTg0NDMsMjMuMjM5NjU5NyBMMTIuNjQ5ODgyMiwyMy4yNDk5MDUyIEwxMi42NDk4ODIyLDIzLjI0OTkwNTIgTDEyLjY0NzE5NDMsMjMuMjYxMTExNCBMMTIuNjY1MDk0MywyMy42OTA2Mzg5IEwxMi42Njk5MzQ5LDIzLjcwMzQxNzggTDEyLjY2OTkzNDksMjMuNzAzNDE3OCBMMTIuNjc4Mzg2LDIzLjcxMDQ5MzEgTDEyLjg3OTM0MDIsMjMuODAzMjM4OSBDMTIuODkxNDI4NSwyMy44MDY4OTk5IDEyLjkwMjIzMzMsMjMuODAyOTg3NSAxMi45MDc4Mjg2LDIzLjc5NTIyNjQgTDEyLjkxMTgyMzUsMjMuNzgxMTYzOSBMMTIuODc3Njc3NywyMy4xNjY1MzMxIEMxMi44NzUyODgyLDIzLjE1NDU4OTcgMTIuODY3NDEwMiwyMy4xNDcwMDE2IDEyLjg1ODM5MDYsMjMuMTQ1Mjg2MiBMMTIuODU4MzkwNiwyMy4xNDUyODYyIFogTTEyLjE0MzA0NzMsMjMuMTQ3MzA3MiBDMTIuMTMzMjE3OCwyMy4xNDIzOTI1IDEyLjEyMjE3NjMsMjMuMTQ1MjYwNiAxMi4xMTU2MzY1LDIzLjE1MjU5NTQgTDEyLjEwOTkxNzMsMjMuMTY2NTMzMSBMMTIuMDc1NzcxNCwyMy43ODExNjM5IEMxMi4wNzUxMzIzLDIzLjc5MjY2MzkgMTIuMDgyODA5OSwyMy44MDE4NjAyIDEyLjA5MjY0ODEsMjMuODA0NTY3NiBMMTIuMTA4MjU2LDIzLjgwMzIzODkgTDEyLjMwOTIxMDYsMjMuNzEwNDkzMSBMMTIuMzE4NjQ5NywyMy43MDI0MzQ3IEwxMi4zMTg2NDk3LDIzLjcwMjQzNDcgTDEyLjMyMjUwNDMsMjMuNjkwNjM4OSBMMTIuMzQwNDAxLDIzLjI2MTExMTQgTDEyLjMzNzI0NSwyMy4yNDg1MTc2IEwxMi4zMzcyNDUsMjMuMjQ4NTE3NiBMMTIuMzI3NzUzMSwyMy4yMzk2NTk3IEwxMi4xNDMwNDczLDIzLjE0NzMwNzIgWiIgZmlsbC1ydWxlPSJub256ZXJvIj4gPC9wYXRoPiA8cGF0aCBkPSJNMTEsMyBDMTEuNTUyMywzIDEyLDMuNDQ3NzIgMTIsNCBDMTIsNC41MTI4MzE0MyAxMS42MTM5NzMsNC45MzU1MDY1MyAxMS4xMTY2MjM5LDQuOTkzMjcyMiBMMTEsNSBMNSw1IEw1LDE5IEwxOSwxOSBMMTksMTMgQzE5LDEyLjQ0NzcgMTkuNDQ3NywxMiAyMCwxMiBDMjAuNTEyODUsMTIgMjAuOTM1NTA5MiwxMi4zODYwMjcgMjAuOTkzMjcyNSwxMi44ODMzNzYxIEwyMSwxMyBMMjEsMTkgQzIxLDIwLjA1NDM5MDkgMjAuMTg0MTUsMjAuOTE4MTY3OCAxOS4xNDkyNjYxLDIwLjk5NDUxNDQgTDE5LDIxIEw1LDIxIEMzLjk0NTYzNzczLDIxIDMuMDgxODM0ODMsMjAuMTg0MTUgMy4wMDU0ODU3MywxOS4xNDkyNjYxIEwzLDE5IEwzLDUgQzMsMy45NDU2Mzc3MyAzLjgxNTg3NzMzLDMuMDgxODM0ODMgNC44NTA3Mzc1OSwzLjAwNTQ4NTczIEw1LDMgTDExLDMgWiBNMTkuNzUsMyBDMjAuNDQwNCwzIDIxLDMuNTU5NjQgMjEsNC4yNSBMMjEsOCBDMjEsOC41NTIyOCAyMC41NTIzLDkgMjAsOSBDMTkuNDQ3Nyw5IDE5LDguNTUyMjggMTksOCBMMTksNi40MTQyMSBMMTIuNDE0MiwxMyBMMTQsMTMgQzE0LjU1MjMsMTMgMTUsMTMuNDQ3NyAxNSwxNCBDMTUsMTQuNTUyMyAxNC41NTIzLDE1IDE0LDE1IEwxMC4yNSwxNSBDOS41NTk2NCwxNSA5LDE0LjQ0MDQgOSwxMy43NSBMOSwxMCBDOSw5LjQ0NzcyIDkuNDQ3NzIsOSAxMCw5IEMxMC41NTIzLDkgMTEsOS40NDc3MiAxMSwxMCBMMTEsMTEuNTg1OCBMMTcuNTg1OCw1IEwxNiw1IEMxNS40NDc3LDUgMTUsNC41NTIyOCAxNSw0IEMxNSwzLjQ0NzcyIDE1LjQ0NzcsMyAxNiwzIEwxOS43NSwzIFoiIGZpbGw9IiMwMDAwMDAiPiA8L3BhdGg+IDwvZz4gPC9nPiA8L2c+IDwvZz4KPC9zdmc+')
+                        0 0,
+                    ns-resize !important;
+            }
+
+            .mapgl-rotate {
+                cursor: url('data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwIiB3aWR0aD0iNDhweCIgaGVpZ2h0PSI0OHB4IiB2aWV3Qm94PSIwIDAgNDggNDgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEyLDZDNi4zLDYsMiw4LjE1LDIsMTFjMCwyLjQ1LDMuMTksNC4zOCw3LjcxLDQuODhsLS40Mi40MWExLDEsMCwwLDAsMCwxLjQyLDEsMSwwLDAsMCwxLjQyLDBsMi0yYTEsMSwwLDAsMCwuMjEtLjMzLDEsMSwwLDAsMCwwLS43NiwxLDEsMCwwLDAtLjIxLS4zM2wtMi0yYTEsMSwwLDAsMC0xLjQyLDEuNDJsLjEyLjExQzYsMTMuMzQsNCwxMiw0LDExYzAtMS4yMiwzLjEyLTMsOC0zczgsMS43OCw4LDNjMCwuODMtMS40NSwyLTQuMjEsMi42QTEsMSwwLDAsMCwxNSwxNC43OWExLDEsMCwwLDAsMS4xOS43N0MxOS44NCwxNC43NiwyMiwxMy4wNiwyMiwxMSwyMiw4LjE1LDE3LjcsNiwxMiw2WiIvPjwvc3ZnPg==')
+                        0 0,
+                    ew-resize !important;
+            }
+
+            .loader {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                display: block;
+                margin: 15px auto;
+                position: relative;
+                background: #fff;
+                box-shadow: -24px 0 #fff, 24px 0 #fff;
+                box-sizing: border-box;
+                animation: shadow-pulse 2s linear infinite;
+            }
+
+            @keyframes shadow-pulse {
+                33% {
+                    background: #fff;
+                    box-shadow: -24px 0 #ccc, 24px 0 #fff;
+                }
+                66% {
+                    background: #ccc;
+                    box-shadow: -24px 0 #fff, 24px 0 #fff;
+                }
+                100% {
+                    background: #fff;
+                    box-shadow: -24px 0 #fff, 24px 0 #ccc;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+        <div id="main-wrap"></div>
+        <div id="model-params"></div>
+        <script src="https://mapgl.2gis.com/api/js/v1"></script>
+        <script src="index.js"></script>
+    </body>
+</html>
