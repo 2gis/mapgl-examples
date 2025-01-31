@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Transitioning Projections</title>
+        <meta name="description" content="Demo of transition between globe and flat map" />
+        <meta name="category" content="Globe" />
+        <style>
+            html,
+            body,
+            #container {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+          
+            #controls {
+                position: absolute;
+                z-index: 3;
+                top: 16px;
+                right: 16px;
+                display: flex;
+                flex-direction: column;
+            }
+          
+            #controls button {
+                padding: 8px;
+                margin: 8px;
+                font-weight: bolder;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="controls">
+          <button onclick="toZoom(9)" >zoom in</button>
+          <button onclick="toZoom(4)">zoom out</button> 
+        </div>
+        <div id="container"></div>
+        <script src="https://mapgl.2gis.com/api/js/v0.0.360"></script>
+        <script>
+            const map = new mapgl.Map('container', {
+                center: [30.3313, 59.9390],
+                zoom: 4,
+                key: 'f1e71868-5c3d-4743-825c-90485bebbef4',
+                style: 'c080bb6a-8134-4993-93a1-5b4d8c36a59b',
+                lang: 'ru',
+                zoomControl: false,
+                styleState: { globeEnabled: true }
+            });
+
+            function toZoom(n) {
+                map.setZoom(n, { duration: 5000 });
+            }
+        </script>
+    </body>
+</html>
