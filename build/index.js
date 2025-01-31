@@ -52,6 +52,10 @@ files
             return '';
         }
 
+        if (category === 'hidden') {
+            return '';
+        }
+
         const previewPath = `${folder.name}/preview.png`;
         const previewExists = fs.existsSync('src/' + previewPath);
         if (!previewExists) {
@@ -73,7 +77,7 @@ files
                     >[source]</a
                 >
             </div>
-        </div>`;
+        </div>`;       
 
         if (!examples[category]) {
             examples[category] = [];

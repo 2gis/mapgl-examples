@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Globe crossfade</title>
+        <meta name="description" content="Crossfading between globe and mercator projections" />
+        <meta name="category" content="hidden" />
+        <style>
+            html,
+            body,
+            #container {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+          
+           #controls {
+                position: absolute;
+                z-index: 3;
+                top: 16px;
+                right: 16px;
+                display: flex;
+                background: white;
+                border-radius: 8px;
+                border: solid 1px #eee;
+                padding: 8px;
+                font-family: sans-serif;
+          }      
+        </style>
+    </head>
+    <body>
+        <div id="controls">
+          Flat <input type="range" id="crossfade" min="0" max="1" value="1" step="0.01" oninput="forceCrossfade(event)" /> Globe
+        </div>
+        <div id="container"></div>
+        <script src="https://mapgl.2gis.com/api/js/v0.0.360"></script>
+        <script>
+            const map = (window.map) = new mapgl.Map('container', {
+                center: [30.3313, 59.9390],
+                zoom: 2.5,
+                key: 'f1e71868-5c3d-4743-825c-90485bebbef4',
+                style: 'c080bb6a-8134-4993-93a1-5b4d8c36a59b',
+                lang: 'ru',
+                zoomControl: false,
+                styleState: { globeEnabled: true }
+            });
+
+
+            let crossfadeValue = 1;
+
+            const oldUpdate = map._impl.modules.camera.update;
+
+            // Nasty hack. Do not do like this in production.
+            map._impl.modules.camera.update = () => {
+                oldUpdate.call(map._impl.modules.camera);
+                map._impl.modules.camera.flat2ecef = crossfadeValue;
+            }
+            // Nasty hack. Do not do like this in production.
+            map._impl.modules.environmentManager.renderGlobeHalo = () => {};
+
+            function forceCrossfade(ev) {
+                crossfadeValue = ev.target.value;
+                map.triggerRerender();
+            }
+
+        </script>
+    </body>
+</html>
