@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MapGL Terrain</title>
+    <meta name="description" content="Demo 3D terrain with MapGL" />
+    <meta name="category" content="Terrain" />
+    <style>
+        html,
+        body,
+        #container {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+      
+        #doFly {
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          z-index: 5;
+          display: flex;
+          flex-direction: column;
+      	}
+      
+        #doFly button {
+          z-index: 5;
+        }
+    </style>
+</head>
+<body>
+  <div id="doFly"></div>
+  <div id="container"></div>
+ 
+ 
+<script src="https://mapgl.2gis.com/api/js/v1"></script>
+<script>
+function waitIdle() {
+    return new Promise((resolve) => {
+        const interval = setInterval(() => {
+            if (map.isIdle()) {
+                resolve();
+                clearInterval(interval);
+            }
+        }, 50);
+    });
+}
+
+const map = new mapgl.Map('container', {
+    center: [82.9314, 55.0301],
+    zoom: 2,
+    maxZoom: 22,
+    hillshade: true,
+    style: 'eb10e2c3-3c28-4b81-b74b-859c9c4cf47e',
+    key: 'f1e71868-5c3d-4743-825c-90485bebbef4',
+    loopWorld: true,
+    styleState: {
+        terrainScale: 1.5
+    }
+});
+ 
+window.addEventListener('resize', () => map.invalidateSize());
+
+const targetPoints = [{
+    name: 'Кроноцкая Сопка',
+    center: [160.52082, 54.74607],
+    zoom: 12.8,
+    rotation: 0,
+    pitch: 45
+}, {
+    name: 'Вулкан Креницына',
+    center: [154.72235, 49.33624],
+    zoom: 12.8,
+    rotation: 0,
+    pitch: 45
+}, {
+    name: 'Красная Поляна',
+    center: [40.26825, 43.64086],
+    zoom: 13.610,
+    rotation: 8,
+    pitch: 45
+}, {
+    name: 'Кату Ярык',
+    center: [88.22729, 50.91056],
+    zoom: 13.732,
+    rotation: 75,
+    pitch: 45
+}, {
+    name: 'Гора Зеленая',
+    center: [87.93171, 52.94994],
+    zoom: 13.581,
+    rotation: 41,
+    pitch: 45
+}, {
+    name: 'Медеу',
+    center: [77.06098, 43.13382],
+    zoom: 13.585,
+    rotation: -60,
+    pitch: 45
+}]
+
+const buttonsRoot = document.querySelector('#doFly');
+for (let i = 0; i < targetPoints.length; i++) {
+   const button = document.createElement('button');
+   const flyIndex = i;
+   button.innerText = targetPoints[i].name;
+   button.addEventListener('click', ev => { doFly(flyIndex) });
+   buttonsRoot.appendChild(button);
+}
+
+const FLY_DURATION = 100;
+const PITCH_DURATION = 100;
+const ZOOM_DURATION = 100;
+const AROUND_DURATION = 7000;
+
+async function doFly (index) {
+    const targetPoint = targetPoints[index];
+    map.setCenter(targetPoint.center, { duration: FLY_DURATION });	
+	map.setZoom(targetPoint.zoom, { duration: ZOOM_DURATION });
+	map.setPitch(targetPoint.pitch, { duration: PITCH_DURATION });
+    map.patchStyleState({ terrainEnabled: true });
+		await waitIdle();
+	    
+    map.setRotation(targetPoint.rotation + 359, { normalize: false, duration: AROUND_DURATION });
+}
+  </script>
+
+</body>
+</html>
