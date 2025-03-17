@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <link href="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.css" rel="stylesheet">
+        <script src="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.js"></script>
+        <script src="https://mapgl.2gis.com/api/js/v1"></script>
+        <title>Reload comparsion between MapGL and Mapbox</title>
+        <meta name="description" content="Reload comparsion between MapGL and Mapbox" />
+        <meta name="category" content="hidden" />
+
+        <style>
+            html, body {
+                margin: 0;
+                padding: 0;
+            }
+
+            #map {
+                height: 100vh;
+                width: 100vw;
+            }
+
+            #reload, #destroy {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                z-index: 2;
+            }
+
+            #destroy {
+                left: 110px;
+            }
+        </style>
+    </head>
+    <body>
+        <button id="reload" onclick="reload()">reload</button>
+        <button id="destroy" onclick="destroy()">destroy</button>
+        <div id="map"></div>
+      
+        <script>
+            mapboxgl.accessToken = 'pk.eyJ1IjoiaXRhbmthOSIsImEiOiJjam0zYTh1ZnYwMWN5M3ZucmE3cjRidDdyIn0.hZr8xq9GeFsfTViMiQZdUg';
+
+            let map;
+
+            const url = new URL(location);
+            const mapType = url.searchParams.get('mapType');
+            const mapglUrl = url.searchParams.get('mapglUrl') ?? undefined;
+
+            if (mapType === 'mapgl') {            
+                function reload () {
+                    if (!mapgl) {
+                        return;
+                    }
+                    if (map) {
+                        map.destroy();
+                    }
+            
+                    map = window.map = new mapgl.Map('map', {
+                        center: [37.62708, 55.750471],
+                        key: 'a1893935-6834-4445-b97a-3405fb426c5b',
+                        zoom: 16,
+                    });
+                }
+                reload();
+            
+            
+                function destroy () {
+                    if (!mapgl) {
+                        return;
+                    }
+                    if (map) {
+                        map.destroy();
+                    }
+                }
+            
+                window.reload = reload;
+                window.destroy = destroy;
+            }
+
+            if (mapType === 'mapbox') {
+                function reload () {
+                    if (map) {
+                        map.remove();
+                    }
+                
+                    map = window.map = new mapboxgl.Map({
+                        container: 'map',
+                        style: 'mapbox://styles/mapbox/streets-v9',
+                        zoom: 16,
+                        center: [37.62708, 55.750471]
+                    });
+
+                }
+
+                reload();
+            
+            
+                function destroy () {
+                    if (map) {
+                        map.remove();
+                    }
+                }
+                
+                window.reload = reload;
+                window.destroy = destroy;
+            }
+        </script>
+    </body>
+</html>
