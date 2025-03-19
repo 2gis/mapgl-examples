@@ -7,7 +7,8 @@
         <link rel="shortcut icon" type="image/png" href="../favicon.png" />
         <link href="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.css" rel="stylesheet">
         <script src="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.js"></script>
-        <script src="https://mapgl.2gis.com/api/js/v1"></script>
+        <script src="./mapgl.js"></script>
+        <!-- <script src="https://mapgl.2gis.com/api/js/v1"></script> -->
         <title>Reload comparsion between MapGL and Mapbox</title>
         <meta name="description" content="Reload comparsion between MapGL and Mapbox" />
         <meta name="category" content="hidden" />
@@ -41,7 +42,9 @@
         <div id="map"></div>
       
         <script>
-            mapboxgl.accessToken = 'pk.eyJ1IjoiaXRhbmthOSIsImEiOiJjam0zYTh1ZnYwMWN5M3ZucmE3cjRidDdyIn0.hZr8xq9GeFsfTViMiQZdUg';
+            if (window.mapboxgl) {
+                window.mapboxgl.accessToken = 'pk.eyJ1IjoiaXRhbmthOSIsImEiOiJjam0zYTh1ZnYwMWN5M3ZucmE3cjRidDdyIn0.hZr8xq9GeFsfTViMiQZdUg';
+            }
 
             let map;
 
@@ -56,11 +59,13 @@
                     }
                     if (map) {
                         map.destroy();
+                        map = undefined;
                     }
             
                     map = window.map = new mapgl.Map('map', {
                         center: [37.62708, 55.750471],
-                        key: 'a1893935-6834-4445-b97a-3405fb426c5b',
+                        key: '4970330e-7f1c-4921-808c-0eb7c4e63001',
+                        // key: 'a1893935-6834-4445-b97a-3405fb426c5b',
                         zoom: 16,
                     });
                 }
@@ -73,6 +78,7 @@
                     }
                     if (map) {
                         map.destroy();
+                        map = undefined;
                     }
                 }
             
