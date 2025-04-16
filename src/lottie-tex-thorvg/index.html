@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+
+        <title>Lottie Animations via ThorVG library</title>
+        <meta name="description" content="Lottie Animations via ThorVG library" />
+        <meta name="category" content="hidden" />
+
+        <style>
+            html,
+            body,
+            #map {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+
+            #test {
+                position: absolute;
+                top: calc(50vh - 51px);
+                left: calc(50vw - 51px);
+                width: 102px;
+                height: 102px;
+                visibility: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+        <canvas id="test" width="102" height="102"></canvas>
+        <script src="https://mapgl.2gis.com/api/js/v1"></script>
+        <script type="module" src="./index.js"></script>
+    </body>
+</html>
