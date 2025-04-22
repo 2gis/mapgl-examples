@@ -318,17 +318,51 @@
                     background: #fff;
                     box-shadow: -24px 0 #ccc, 24px 0 #fff;
                 }
+
                 66% {
                     background: #ccc;
                     box-shadow: -24px 0 #fff, 24px 0 #fff;
                 }
+
                 100% {
                     background: #fff;
                     box-shadow: -24px 0 #fff, 24px 0 #ccc;
                 }
             }
+
+            .terrainButtonRoot {
+                background: #fff;
+                box-shadow: 0 1px 3px 0 rgba(38, 38, 38, 0.5);
+                border-radius: 4px;
+                width: 32px;
+                overflow: hidden;
+            }
+
+            .terrainButton {
+                all: revert;
+                padding: 0;
+                outline: 0;
+                border: none;
+                cursor: pointer;
+                box-sizing: border-box;
+                font-size: 18px;
+                font-weight: 400;
+                width: 32px;
+                height: 32px;
+                color: #262626;
+                background: #fff;
+                width: 32px;
+                height: 32px;
+                padding: 0;
+                display: flex;
+            }
+
+            .none:hover {
+                opacity: 0.7;
+            }
         </style>
     </head>
+
     <body>
         <div id="map"></div>
         <div id="main-wrap"></div>
