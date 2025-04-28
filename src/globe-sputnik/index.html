@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>MapGL Globe</title>
+        <meta name="description" content="Getting into Globe with MapGL" />
+        <meta name="category" content="Globe" />
+        <style>
+            html,
+            body,
+            #container {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container"></div>
+        <script src="https://mapgl.2gis.com/api/js/v0.0.366"></script>
+        <script>
+            const map = new mapgl.Map('container', {
+                center: [84.43, 33.92],
+                zoom: 2.5,
+                zoomControl: false,
+                lang: navigator.language.split('-')[0],
+                // API key can be used on 2gis.github.io/mapgl-examples only!
+                key: 'f1e71868-5c3d-4743-825c-90485bebbef4', 
+                style: 'c080bb6a-8134-4993-93a1-5b4d8c36a59b',
+                styleState: { globeEnabled: true }
+            });
+
+            const elevation = 10 ** 7;
+
+            const T = 40000;
+
+            const orbitParams = {
+                inclination: 65,
+                longitude: 10,
+            };
+
+            const sputnikParams = {
+                coordinates: [0, 0, elevation],
+                modelSrc: `https://disk.2gis.com/styles/assets/models/east1-2-ae1e1bb19bdcd8d7b6aec614c193859664c1f16dd6f640d709aec22ddf48c54a.glb`,
+                scale: 100000,
+                minZoom: 1,
+                maxZoom: 5,
+                offset: [0, 0, 0],
+                rotation: [0, 0, 0],
+                interactive: true,
+            };
+
+            const jakarta = map._impl;
+
+            let trackSputnik = false;
+            let isAnimating = false;
+            let startTime = null;
+            let animationFrameId = null;
+
+            const onSputnikClick = () => {
+                trackSputnik = !trackSputnik;
+            };
+
+            const disableTracking = () => {
+                if (trackSputnik) {
+                    trackSputnik = false;
+                }
+            };
+
+            const sputnik = new mapgl._J.GltfModel(jakarta, sputnikParams);
+
+            /**При клике в спутник начинаем отслеживание */
+            sputnik.on('click', onSputnikClick);
+
+            const container = jakarta.getContainer();
+            /**При клике в карту мимо спутника сбрасываем отслеживание */
+            container.addEventListener('click', disableTracking);
+
+            const startAnimation = () => {
+                if (!isAnimating) {
+                    isAnimating = true;
+                    startTime = null; // Сбрасываем время для новой анимации
+                    animationFrameId = requestAnimationFrame(aroundTheWorld);
+                }
+            };
+
+            const stopAnimation = () => {
+                if (isAnimating && animationFrameId !== null) {
+                    cancelAnimationFrame(animationFrameId);
+                    animationFrameId = null;
+                    isAnimating = false;
+                }
+            };
+
+            /**Рекурсивная функция рассчета положения спутника */
+            const aroundTheWorld = (timestamp) => {
+                if (!startTime) startTime = timestamp;
+                const elapsed = (timestamp - startTime) % T;
+
+                const progress = elapsed / T;
+
+                let longitude = orbitParams.longitude + 180 + (2 * progress - 1) * 180;
+                if (longitude > 180) {
+                    longitude -= 360;
+                }
+
+                const latitude = Math.sin(progress * Math.PI * 2) * orbitParams.inclination;
+
+                const rotationY = longitude + 90;
+                const rotationX = Math.sin(Math.PI * 0.5 + progress * Math.PI * 2) * orbitParams.inclination;
+
+                // Применяем трансформацию только если координаты изменились
+                sputnik.transform([
+                    { coordinates: [longitude, latitude, elevation], duration: 0 },
+                    { rotation: [-rotationX, rotationY, 0], duration: 0 },
+                ]);
+
+                if (trackSputnik) {
+                    /**Фиксируем центр карты над спутником */
+                    jakarta.setCenter([longitude, latitude], { duration: 0 });
+                }
+
+                animationFrameId = requestAnimationFrame(aroundTheWorld);
+            };
+
+            const handleZoom = () => {
+                const currentZoom = jakarta.getZoom();
+                if (currentZoom > 5) {
+                    stopAnimation();
+                    disableTracking();
+                } else {
+                    startAnimation();
+                }
+            };
+
+            jakarta.on('zoom', handleZoom);
+
+            startAnimation();
+        </script>
+    </body>
+</html>
