@@ -23,13 +23,14 @@
         <script>
             const map = new mapgl.Map('container', {
                 center: [84.43, 33.92],
-                zoom: 2.5,
+                zoom: 2,
                 zoomControl: false,
                 lang: navigator.language.split('-')[0],
                 // API key can be used on 2gis.github.io/mapgl-examples only!
                 key: 'f1e71868-5c3d-4743-825c-90485bebbef4', 
                 style: 'c080bb6a-8134-4993-93a1-5b4d8c36a59b',
-                styleState: { globeEnabled: true }
+                styleState: { globeEnabled: true },
+                graphicsPreset: 'immersive'
             });
 
             const elevation = 10 ** 7;
