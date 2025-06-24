@@ -5,7 +5,7 @@ const map = (window.map) = new mapgl.Map('map', {
     zoom: 19,
     pitch: 17,
     rotation: 160,
-    key: '4970330e-7f1c-4921-808c-0eb7c4e63001',
+    key: 'a1893935-6834-4445-b97a-3405fb426c5b',
 });
 
 const _wasmUrl = './thorvg-wasm.wasm'; 

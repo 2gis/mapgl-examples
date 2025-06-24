@@ -1,7 +1,7 @@
 const map = new mapgl.Map('map', {
     center: [55.31878, 25.23584],
     zoom: 13,
-    key: '4970330e-7f1c-4921-808c-0eb7c4e63001',
+    key: 'a1893935-6834-4445-b97a-3405fb426c5b',
 });
 
 const marker = new mapgl.HtmlMarker(map, {
