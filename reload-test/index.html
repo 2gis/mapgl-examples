@@ -48,7 +48,7 @@
             let map;
 
             const url = new URL(location);
-            const mapType = url.searchParams.get('mapType');
+            const mapType = 'mapgl'; // url.searchParams.get('mapType');
             const mapglUrl = url.searchParams.get('mapglUrl') ?? undefined;
 
             if (mapType === 'mapgl') {            
@@ -63,9 +63,12 @@
             
                     map = window.map = new mapgl.Map('map', {
                         center: [37.62708, 55.750471],
-                        key: '4970330e-7f1c-4921-808c-0eb7c4e63001',
-                        // key: 'a1893935-6834-4445-b97a-3405fb426c5b',
-                        zoom: 16,
+                        key: 'a1893935-6834-4445-b97a-3405fb426c5b',
+                        maxPitch: 80,
+                        lowZoomMaxPitch: 80,
+                        pitch: 75,
+                        rotation: 33,
+                        zoom: 17.5,
                     });
                 }
                 reload();
@@ -81,34 +84,6 @@
                     }
                 }
             
-                window.reload = reload;
-                window.destroy = destroy;
-            }
-
-            if (mapType === 'mapbox') {
-                function reload () {
-                    if (map) {
-                        map.remove();
-                    }
-                
-                    map = window.map = new mapboxgl.Map({
-                        container: 'map',
-                        style: 'mapbox://styles/mapbox/streets-v9',
-                        zoom: 16,
-                        center: [37.62708, 55.750471]
-                    });
-
-                }
-
-                reload();
-            
-            
-                function destroy () {
-                    if (map) {
-                        map.remove();
-                    }
-                }
-                
                 window.reload = reload;
                 window.destroy = destroy;
             }
