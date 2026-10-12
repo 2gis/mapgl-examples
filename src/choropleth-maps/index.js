@@ -202,10 +202,10 @@ function clearHover() {
  * Color palettes (low value → high value) as lists of color stops.
  */
 const PALETTES = {
-    yellowRed: ['#fee7bd', '#b30000'],
-    greenBlue: ['#d9f0d3', '#41ab5d', '#08519c'],
-    purple: ['#f2f0f7', '#54278f'],
-    blues: ['#deebf7', '#08306b'],
+    yellowRed: ['#f6b26b', '#b30000'],
+    greenBlue: ['#a1d99b', '#41ab5d', '#08519c'],
+    purple: ['#bcbddc', '#54278f'],
+    blues: ['#9ecae1', '#08306b'],
     spectral: ['#3288bd', '#99d594', '#e6f598', '#fee08b', '#fc8d59', '#d53e4f'],
 };
 
