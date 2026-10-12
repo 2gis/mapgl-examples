@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <script src="../sourcebutton.js"></script>
+
+        <title>Choropleth maps</title>
+        <meta name="description" content="Choropleth map visualization example" />
+        <meta name="category" content="Common" />
+
+        <style>
+            html,
+            body {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                font-family: Arial, sans-serif;
+            }
+
+            #app {
+                display: flex;
+                width: 100%;
+                height: 100%;
+            }
+
+            #sidebar {
+                width: 300px;
+                height: 100%;
+                background: #ffffff;
+                box-shadow: 2px 0 6px rgba(0, 0, 0, 0.15);
+                overflow-y: auto;
+                transition: margin-left 0.25s ease;
+                flex-shrink: 0;
+                z-index: 2;
+            }
+
+            #sidebar.collapsed {
+                margin-left: -300px;
+            }
+
+            #sidebar-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 12px 16px;
+                border-bottom: 1px solid #e6e6e6;
+            }
+
+            #sidebar-header h1 {
+                margin: 0;
+                font-size: 16px;
+            }
+
+            .sidebar-section {
+                padding: 12px 16px;
+                border-bottom: 1px solid #e6e6e6;
+            }
+
+            .sidebar-section label {
+                display: block;
+                font-size: 13px;
+                margin-bottom: 6px;
+                color: #333;
+            }
+
+            .sidebar-section select,
+            .sidebar-section input {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .row label {
+                margin-bottom: 0;
+            }
+
+            #legend {
+                font-size: 12px;
+            }
+
+            .legend-item {
+                display: flex;
+                align-items: center;
+                margin-bottom: 4px;
+            }
+
+            .legend-swatch {
+                width: 14px;
+                height: 14px;
+                border-radius: 2px;
+                margin-right: 8px;
+                flex-shrink: 0;
+            }
+
+            #map {
+                flex: 1 1 0;
+                min-width: 0;
+                min-height: 0;
+                height: 100%;
+            }
+
+            #map canvas {
+                display: block;
+            }
+
+            #sidebar-toggle {
+                position: absolute;
+                top: 10px;
+                left: 310px;
+                z-index: 3;
+                width: 32px;
+                height: 32px;
+                border: none;
+                border-radius: 4px;
+                background: #ffffff;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+                cursor: pointer;
+                font-size: 16px;
+                line-height: 1;
+                padding: 0;
+                transition: left 0.25s ease;
+            }
+
+            body.sidebar-collapsed #sidebar-toggle {
+                left: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <aside id="sidebar">
+                <div id="sidebar-header">
+                    <h1>Настройки отрисовки</h1>
+                </div>
+
+                <div class="sidebar-section">
+                    <label for="map-style">Стиль карты</label>
+                    <select id="map-style">
+                        <option value="c080bb6a-8134-4993-93a1-5b4d8c36a59b" selected>2GIS Day</option>
+                        <option value="e05ac437-fcc2-4845-ad74-b1de9ce07555">2GIS Night</option>
+                        <option value="b2b8046f-9bb0-469a-9860-9847032935cc">2GIS Grayscale</option>
+                        <option value="1db52c6e-66b6-4c99-9c83-5538fa962d43">2GIS Snow</option>
+                        <option value="9e75a94c-36f7-4254-8101-90139ead38ad">2GIS 2009</option>
+                    </select>
+                </div>
+
+                <div class="sidebar-section">
+                    <label for="metric">Показатель</label>
+                    <select id="metric" disabled>
+                        <option value="population">Население</option>
+                    </select>
+                </div>
+
+                <div class="sidebar-section">
+                    <label for="bins">Количество градаций: <span id="bins-value">6</span></label>
+                    <input type="range" id="bins" min="3" max="9" step="1" value="6" />
+                </div>
+
+                <div class="sidebar-section">
+                    <label for="opacity">Прозрачность заливки: <span id="opacity-value">70%</span></label>
+                    <input type="range" id="opacity" min="0" max="100" step="5" value="70" />
+                </div>
+
+                <div class="sidebar-section">
+                    <label for="palette">Цветовая палитра</label>
+                    <select id="palette">
+                        <option value="yellowRed" selected>Жёлтый — красный</option>
+                        <option value="greenBlue">Зелёный — синий</option>
+                        <option value="purple">Фиолетовый</option>
+                        <option value="blues">Синий градиент</option>
+                        <option value="spectral">Спектральная</option>
+                    </select>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="row">
+                        <label for="hover">Подсветка при наведении</label>
+                        <input type="checkbox" id="hover" checked />
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <label>Легенда</label>
+                    <div id="legend"></div>
+                </div>
+            </aside>
+
+            <div id="map"></div>
+        </div>
+
+        <button id="sidebar-toggle" title="Скрыть панель">«</button>
+
+        <script src="https://mapgl.2gis.com/api/js/v1"></script>
+        <script src="./index.js"></script>
+    </body>
+</html>
