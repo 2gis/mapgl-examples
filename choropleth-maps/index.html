@@ -22,24 +22,28 @@
             }
 
             #app {
-                display: flex;
+                position: relative;
                 width: 100%;
                 height: 100%;
             }
 
             #sidebar {
+                position: absolute;
+                top: 0;
+                left: 0;
                 width: 300px;
                 height: 100%;
-                background: #ffffff;
-                box-shadow: 2px 0 6px rgba(0, 0, 0, 0.15);
+                background: rgba(255, 255, 255, 0.82);
+                -webkit-backdrop-filter: blur(8px);
+                backdrop-filter: blur(8px);
+                box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
                 overflow-y: auto;
-                transition: margin-left 0.25s ease;
-                flex-shrink: 0;
+                transition: transform 0.25s ease;
                 z-index: 2;
             }
 
             #sidebar.collapsed {
-                margin-left: -300px;
+                transform: translateX(-100%);
             }
 
             #sidebar-header {
@@ -55,6 +59,67 @@
                 font-size: 16px;
             }
 
+            .sidebar-header-label {
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                color: #888;
+                margin-bottom: 2px;
+            }
+
+            #sidebar-controls.hidden,
+            #sidebar-empty.hidden {
+                display: none;
+            }
+
+            .sidebar-section.hidden {
+                display: none;
+            }
+
+            #sidebar-empty {
+                padding: 16px;
+            }
+
+            .hint-box {
+                padding: 14px;
+                background: #fffbeb;
+                border: 2px solid #f0c000;
+                border-radius: 10px;
+            }
+
+            .hint-title {
+                margin-bottom: 6px;
+                font-size: 14px;
+                font-weight: 700;
+                color: #7a5c00;
+            }
+
+            .hint-text {
+                margin-bottom: 12px;
+                font-size: 13px;
+                line-height: 1.4;
+                color: #7a5c00;
+            }
+
+            .hint-button {
+                width: 100%;
+                padding: 9px 12px;
+                box-sizing: border-box;
+                font: inherit;
+                font-size: 13px;
+                font-weight: 700;
+                color: #ffffff;
+                background: #d0a000;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: background 0.15s ease;
+            }
+
+            .hint-button:hover {
+                background: #b88c00;
+            }
+
             .sidebar-section {
                 padding: 12px 16px;
                 border-bottom: 1px solid #e6e6e6;
@@ -68,7 +133,7 @@
             }
 
             .sidebar-section select,
-            .sidebar-section input {
+            .sidebar-section input:not([type="checkbox"]):not([type="color"]) {
                 width: 100%;
                 box-sizing: border-box;
             }
@@ -77,10 +142,30 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                gap: 8px;
+                width: 100%;
             }
 
             .row label {
                 margin-bottom: 0;
+            }
+
+            .sidebar-section input[type="checkbox"] {
+                width: 16px;
+                height: 16px;
+                margin: 0;
+                flex-shrink: 0;
+            }
+
+            .sidebar-section input[type="color"] {
+                width: 44px;
+                height: 28px;
+                padding: 0;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                background: none;
+                cursor: pointer;
+                flex-shrink: 0;
             }
 
             #legend {
@@ -102,14 +187,217 @@
             }
 
             #map {
-                flex: 1 1 0;
-                min-width: 0;
-                min-height: 0;
+                width: 100%;
                 height: 100%;
             }
 
             #map canvas {
                 display: block;
+            }
+
+            #map-tooltip {
+                position: absolute;
+                bottom: 16px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 2;
+                max-width: calc(100% - 32px);
+                padding: 8px 14px;
+                box-sizing: border-box;
+                font-size: 13px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                color: #222;
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 6px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+                pointer-events: none;
+            }
+
+            #map-tooltip.hidden {
+                display: none;
+            }
+
+            #map-search {
+                position: absolute;
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 3;
+                width: 360px;
+                max-width: calc(100% - 40px);
+                box-sizing: border-box;
+                background: #ffffff;
+                border-radius: 6px;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+            }
+
+            #map-search.hidden {
+                display: none;
+            }
+
+            .map-search-row {
+                display: flex;
+                align-items: center;
+                height: 36px;
+                padding: 0 8px 0 12px;
+            }
+
+            #map-search-input {
+                flex: 1;
+                min-width: 0;
+                height: 100%;
+                border: none;
+                outline: none;
+                font: inherit;
+                font-size: 14px;
+                background: none;
+                color: #222;
+            }
+
+            #map-search-clear {
+                flex-shrink: 0;
+                width: 24px;
+                height: 24px;
+                border: none;
+                border-radius: 4px;
+                background: none;
+                color: #888;
+                font-size: 16px;
+                line-height: 1;
+                cursor: pointer;
+            }
+
+            #map-search-clear:hover {
+                background: #f0f0f0;
+                color: #333;
+            }
+
+            #map-search-suggestions {
+                border-top: 1px solid #eee;
+                max-height: 240px;
+                overflow-y: auto;
+            }
+
+            #map-search-suggestions.hidden {
+                display: none;
+            }
+
+            .map-search-suggestion {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+                padding: 8px 12px;
+                font-size: 13px;
+                color: #222;
+                cursor: pointer;
+            }
+
+            .map-search-suggestion:hover,
+            .map-search-suggestion.active {
+                background: #f2f2f2;
+            }
+
+            .map-search-suggestion .suggestion-type {
+                flex-shrink: 0;
+                font-size: 11px;
+                color: #999;
+            }
+
+            .map-search-suggestion .suggestion-name {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            #selection-panel,
+            #cities-panel {
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+                z-index: 3;
+                width: 240px;
+                max-height: 70%;
+                display: flex;
+                flex-direction: column;
+                box-sizing: border-box;
+                padding: 12px;
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 6px;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+                font-size: 13px;
+            }
+
+            #selection-panel.hidden,
+            #cities-panel.hidden {
+                display: none;
+            }
+
+            .selection-panel-title {
+                font-weight: 700;
+                margin-bottom: 8px;
+                color: #222;
+            }
+
+            #selection-list,
+            #cities-list {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                overflow-y: auto;
+            }
+
+            .selection-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+                padding: 6px 4px 6px 8px;
+                border-radius: 4px;
+            }
+
+            .selection-item:hover {
+                background: #f2f2f2;
+            }
+
+            .selection-item-name {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .selection-item-remove {
+                flex-shrink: 0;
+                width: 20px;
+                height: 20px;
+                border: none;
+                border-radius: 4px;
+                background: none;
+                color: #888;
+                font-size: 14px;
+                line-height: 1;
+                cursor: pointer;
+            }
+
+            .selection-item-remove:hover {
+                background: #e4e4e4;
+                color: #333;
+            }
+
+            .city-item {
+                cursor: pointer;
+            }
+
+            .selection-empty {
+                color: #999;
+                font-size: 12px;
+            }
+
+            .selection-empty.hidden {
+                display: none;
             }
 
             #sidebar-toggle {
@@ -133,71 +421,421 @@
             body.sidebar-collapsed #sidebar-toggle {
                 left: 10px;
             }
+
+            /* Welcome dialog */
+            #welcome {
+                position: fixed;
+                inset: 0;
+                z-index: 20;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                box-sizing: border-box;
+                background: rgba(0, 0, 0, 0.45);
+            }
+
+            #welcome.hidden {
+                display: none;
+            }
+
+            #welcome-card {
+                position: relative;
+                width: 780px;
+                max-width: 100%;
+                max-height: 100%;
+                overflow-y: auto;
+                padding: 28px 32px 32px;
+                box-sizing: border-box;
+                background: #ffffff;
+                border-radius: 12px;
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+            }
+
+            #welcome-card h2 {
+                margin: 0 0 8px;
+                font-size: 22px;
+            }
+
+            .welcome-subtitle {
+                margin: 0 0 22px;
+                font-size: 14px;
+                line-height: 1.5;
+                color: #555;
+            }
+
+            #welcome-close {
+                position: absolute;
+                top: 14px;
+                right: 14px;
+                width: 32px;
+                height: 32px;
+                border: none;
+                border-radius: 6px;
+                background: #f2f2f2;
+                color: #333;
+                font-size: 20px;
+                line-height: 1;
+                cursor: pointer;
+            }
+
+            #welcome-close:hover {
+                background: #e4e4e4;
+            }
+
+            .cases {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+                margin-bottom: 24px;
+            }
+
+            .case-tile {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                min-height: 96px;
+                padding: 14px;
+                box-sizing: border-box;
+                text-align: left;
+                font: inherit;
+                color: #222;
+                background: #fafafa;
+                border: 1px solid #e0e0e0;
+                border-radius: 10px;
+                cursor: pointer;
+                transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+            }
+
+            .case-tile:hover {
+                border-color: #d0a000;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+                transform: translateY(-1px);
+            }
+
+            .case-tile:disabled {
+                color: #999;
+                background: #f4f4f4;
+                cursor: default;
+            }
+
+            .case-tile:disabled:hover {
+                border-color: #e0e0e0;
+                box-shadow: none;
+                transform: none;
+            }
+
+            .case-tile:disabled .case-desc {
+                color: #aaa;
+            }
+
+            .case-title {
+                font-size: 14px;
+                font-weight: 700;
+            }
+
+            .case-desc {
+                font-size: 12px;
+                line-height: 1.4;
+                color: #777;
+            }
+
+            .case-badge {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                padding: 2px 8px;
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+                color: #9a7b00;
+                background: #fff3cd;
+                border-radius: 20px;
+            }
+
+            .loading-label {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 8px;
+                font-size: 13px;
+                color: #333;
+            }
+
+            .progress {
+                height: 8px;
+                border-radius: 4px;
+                background: #ececec;
+                overflow: hidden;
+            }
+
+            .progress-bar {
+                height: 100%;
+                width: 0;
+                border-radius: 4px;
+                background: #d0a000;
+                transition: width 0.15s linear;
+            }
+
+            .progress-bar.indeterminate {
+                width: 40% !important;
+                animation: indeterminate 1.2s ease-in-out infinite;
+            }
+
+            @keyframes indeterminate {
+                0% {
+                    margin-left: -40%;
+                }
+                100% {
+                    margin-left: 100%;
+                }
+            }
+
+            .load-status {
+                margin-top: 8px;
+                font-size: 12px;
+                color: #888;
+            }
+
+            #welcome-open {
+                position: absolute;
+                top: 10px;
+                left: 350px;
+                z-index: 3;
+                width: 32px;
+                height: 32px;
+                border: none;
+                border-radius: 4px;
+                background: #ffffff;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+                cursor: pointer;
+                font-size: 16px;
+                line-height: 1;
+                padding: 0;
+                transition: left 0.25s ease;
+            }
+
+            body.sidebar-collapsed #welcome-open {
+                left: 50px;
+            }
+
+            #welcome-open.hidden {
+                display: none;
+            }
         </style>
     </head>
-    <body>
+    <body class="sidebar-collapsed">
         <div id="app">
-            <aside id="sidebar">
+            <aside id="sidebar" class="collapsed">
                 <div id="sidebar-header">
-                    <h1>Настройки отрисовки</h1>
-                </div>
-
-                <div class="sidebar-section">
-                    <label for="map-style">Стиль карты</label>
-                    <select id="map-style">
-                        <option value="c080bb6a-8134-4993-93a1-5b4d8c36a59b" selected>2GIS Day</option>
-                        <option value="e05ac437-fcc2-4845-ad74-b1de9ce07555">2GIS Night</option>
-                        <option value="b2b8046f-9bb0-469a-9860-9847032935cc">2GIS Grayscale</option>
-                        <option value="1db52c6e-66b6-4c99-9c83-5538fa962d43">2GIS Snow</option>
-                        <option value="9e75a94c-36f7-4254-8101-90139ead38ad">2GIS 2009</option>
-                    </select>
-                </div>
-
-                <div class="sidebar-section">
-                    <label for="metric">Показатель</label>
-                    <select id="metric" disabled>
-                        <option value="population">Население</option>
-                    </select>
-                </div>
-
-                <div class="sidebar-section">
-                    <label for="bins">Количество градаций: <span id="bins-value">6</span></label>
-                    <input type="range" id="bins" min="3" max="9" step="1" value="6" />
-                </div>
-
-                <div class="sidebar-section">
-                    <label for="opacity">Прозрачность заливки: <span id="opacity-value">70%</span></label>
-                    <input type="range" id="opacity" min="0" max="100" step="5" value="70" />
-                </div>
-
-                <div class="sidebar-section">
-                    <label for="palette">Цветовая палитра</label>
-                    <select id="palette">
-                        <option value="yellowRed" selected>Жёлтый — красный</option>
-                        <option value="greenBlue">Зелёный — синий</option>
-                        <option value="purple">Фиолетовый</option>
-                        <option value="blues">Синий градиент</option>
-                        <option value="spectral">Спектральная</option>
-                    </select>
-                </div>
-
-                <div class="sidebar-section">
-                    <div class="row">
-                        <label for="hover">Подсветка при наведении</label>
-                        <input type="checkbox" id="hover" checked />
+                    <div class="sidebar-header-text">
+                        <div class="sidebar-header-label">Настройки отрисовки</div>
+                        <h1 id="sidebar-scenario-title">Сценарий не выбран</h1>
                     </div>
                 </div>
 
-                <div class="sidebar-section">
-                    <label>Легенда</label>
-                    <div id="legend"></div>
+                <div id="sidebar-empty">
+                    <div class="hint-box">
+                        <div class="hint-title">Сценарий не выбран</div>
+                        <div class="hint-text">Выберите сценарий, чтобы увидеть настройки отрисовки.</div>
+                        <button id="sidebar-open-scenarios" class="hint-button">Выбрать сценарий</button>
+                    </div>
+                </div>
+
+                <div id="sidebar-controls" class="hidden">
+                    <div class="sidebar-section">
+                        <label for="map-style">Стиль карты</label>
+                        <select id="map-style">
+                            <option value="c080bb6a-8134-4993-93a1-5b4d8c36a59b" selected>2GIS Day</option>
+                            <option value="e05ac437-fcc2-4845-ad74-b1de9ce07555">2GIS Night</option>
+                            <option value="b2b8046f-9bb0-469a-9860-9847032935cc">2GIS Grayscale</option>
+                            <option value="1db52c6e-66b6-4c99-9c83-5538fa962d43">2GIS Snow</option>
+                            <option value="9e75a94c-36f7-4254-8101-90139ead38ad">2GIS 2009</option>
+                        </select>
+                    </div>
+
+                    <div class="sidebar-section" data-cases="population">
+                        <label for="metric">Показатель</label>
+                        <select id="metric" disabled>
+                            <option value="population">Население</option>
+                        </select>
+                    </div>
+
+                    <div class="sidebar-section" data-cases="population">
+                        <label for="bins">Количество градаций: <span id="bins-value">6</span></label>
+                        <input type="range" id="bins" min="3" max="9" step="1" value="6" />
+                    </div>
+
+                    <div class="sidebar-section" data-cases="population detail search selection blocks">
+                        <label for="opacity">Прозрачность заливки: <span id="opacity-value">70%</span></label>
+                        <input type="range" id="opacity" min="0" max="100" step="5" value="70" />
+                    </div>
+
+                    <div class="sidebar-section" data-cases="detail">
+                        <label for="stroke-width">Толщина обводки границ: <span id="stroke-width-value">1</span> px</label>
+                        <input type="range" id="stroke-width" min="1" max="5" step="1" value="1" />
+                    </div>
+
+                    <div class="sidebar-section" data-cases="detail">
+                        <div class="row">
+                            <label for="region-color">Цвет регионов</label>
+                            <input type="color" id="region-color" value="#bdbdbd" />
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section" data-cases="detail">
+                        <div class="row">
+                            <label for="district-color">Цвет административных округов</label>
+                            <input type="color" id="district-color" value="#5b8fc9" />
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section" data-cases="blocks">
+                        <div class="row">
+                            <label for="blocks-fill-out">Цвет кварталов при отдалении</label>
+                            <input type="color" id="blocks-fill-out" value="#ff0000" />
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section" data-cases="blocks">
+                        <div class="row">
+                            <label for="blocks-fill-in">Цвет кварталов при приближении</label>
+                            <input type="color" id="blocks-fill-in" value="#f5e6b8" />
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section" data-cases="blocks">
+                        <div class="row">
+                            <label for="blocks-stroke">Цвет обводки кварталов</label>
+                            <input type="color" id="blocks-stroke" value="#ff0000" />
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section" data-cases="selection">
+                        <div class="row">
+                            <label for="selection-color">Цвет выделенных регионов</label>
+                            <input type="color" id="selection-color" value="#2e7d32" />
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section" data-cases="search">
+                        <div class="row">
+                            <label for="search-color">Цвет найденного региона</label>
+                            <input type="color" id="search-color" value="#6a1b9a" />
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section" data-cases="population">
+                        <label for="palette">Цветовая палитра</label>
+                        <select id="palette">
+                            <option value="yellowRed" selected>Жёлтый — красный</option>
+                            <option value="greenBlue">Зелёный — синий</option>
+                            <option value="purple">Фиолетовый</option>
+                            <option value="blues">Синий градиент</option>
+                            <option value="spectral">Спектральная</option>
+                        </select>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <div class="row">
+                            <label for="hover">Подсветка при наведении</label>
+                            <input type="checkbox" id="hover" checked />
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <div class="row">
+                            <label for="tooltip">Показывать тултип</label>
+                            <input type="checkbox" id="tooltip" checked />
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section" data-cases="population">
+                        <label>Легенда</label>
+                        <div id="legend"></div>
+                    </div>
                 </div>
             </aside>
 
             <div id="map"></div>
+            <div id="map-tooltip" class="hidden"></div>
+            <div id="map-search" class="hidden">
+                <div class="map-search-row">
+                    <input
+                        type="text"
+                        id="map-search-input"
+                        placeholder="Поиск на карте…"
+                        autocomplete="off"
+                    />
+                    <button id="map-search-clear" title="Очистить">×</button>
+                </div>
+                <div id="map-search-suggestions" class="hidden"></div>
+            </div>
+
+            <div id="selection-panel" class="hidden">
+                <div class="selection-panel-title">Выделенные объекты</div>
+                <ul id="selection-list"></ul>
+                <div id="selection-empty" class="selection-empty">Ничего не выбрано</div>
+            </div>
+
+            <div id="cities-panel" class="hidden">
+                <div class="selection-panel-title">Города</div>
+                <ul id="cities-list"></ul>
+            </div>
         </div>
 
-        <button id="sidebar-toggle" title="Скрыть панель">«</button>
+        <button id="sidebar-toggle" title="Показать панель">»</button>
+        <button id="welcome-open" class="hidden" title="Выбрать сценарий">▦</button>
+
+        <div id="welcome">
+            <div id="welcome-card">
+                <button id="welcome-close" title="Закрыть">×</button>
+                <h2>Хороплетовые карты MapGL 2ГИС</h2>
+                <p class="welcome-subtitle">
+                    Что это: демонстрация работы с хороплетовыми картами SDK MapGL 2ГИС.
+                    Выберите сценарий, чтобы посмотреть разные способы визуализации данных.
+                </p>
+
+                <div class="cases">
+                    <button class="case-tile" data-case="population">
+                        <span class="case-title">Население регионов</span>
+                        <span class="case-desc">Раскраска регионов по численности населения.</span>
+                    </button>
+                    <button class="case-tile" data-case="detail">
+                        <span class="case-title">Детализация регионов</span>
+                        <span class="case-desc">При приближении регионы раскрываются в районы.</span>
+                    </button>
+                    <button class="case-tile" data-case="search">
+                        <span class="case-title">Поиск на карте</span>
+                        <span class="case-desc">Поиск объектов и переход к ним на карте.</span>
+                    </button>
+                    <button class="case-tile" data-case="selection">
+                        <span class="case-title">Выделение на карте</span>
+                        <span class="case-desc">Выбор регионов и районов кликом по карте.</span>
+                    </button>
+                    <button class="case-tile" data-case="blocks">
+                        <span class="case-title">Кварталы городов</span>
+                        <span class="case-desc">Показ только внутригородских кварталов.</span>
+                    </button>
+                    <button class="case-tile" data-case="custom" disabled>
+                        <span class="case-badge">Скоро</span>
+                        <span class="case-title">Свой показатель</span>
+                        <span class="case-desc">Загрузка собственных данных.</span>
+                    </button>
+                </div>
+
+                <div class="loading">
+                    <div class="loading-label">
+                        <span>Загрузка данных GeoJSON</span>
+                        <span id="load-percent">0%</span>
+                    </div>
+                    <div class="progress">
+                        <div id="load-bar" class="progress-bar"></div>
+                    </div>
+                    <div id="load-status" class="load-status">Подготовка…</div>
+                </div>
+            </div>
+        </div>
 
         <script src="https://mapgl.2gis.com/api/js/v1"></script>
         <script src="./index.js"></script>
